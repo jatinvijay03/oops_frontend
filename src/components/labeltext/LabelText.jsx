@@ -6,7 +6,8 @@ function LabelText(props) {
     return (
         <Stack
             direction="row"
-            spacing={2}>
+            spacing={2}
+            justifyContent="space-between">
             <h3>{props.labelName}</h3>
             <Box display="flex" justifyContent="flex-end">
                 <TextField

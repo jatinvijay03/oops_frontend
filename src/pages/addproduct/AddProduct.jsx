@@ -2,7 +2,6 @@ import { useState,useEffect } from 'react';
 
 import Button from "@mui/material/Button";
 import { Card } from "@mui/material";
-import Grid from "@mui/material/Grid";
 import { Stack } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
@@ -152,6 +151,7 @@ function AddProduct() {
 
                         }}
                         onClick = {handleClick}
+                        className=""
 
                     >
                         Add Product
