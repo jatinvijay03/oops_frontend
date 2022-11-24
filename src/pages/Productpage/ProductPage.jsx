@@ -13,6 +13,7 @@ import './productpage.css'
 export default function ProductPage() {
 
     const prodEndPoint = "http://localhost:8080/oops/api/product";
+    const categEndPoint = "http://localhost:8080/oops/api/category";
     const [products, setProducts] = useState([]);
     const [searchInput, setSearch] = useState("");
     
@@ -28,9 +29,11 @@ export default function ProductPage() {
     const getCategs = async () => {
 
         const response = await fetch(prodEndPoint);
-        const myJson = await response.json(); //extract JSON from the http response
+        const myJson = await response.json();
+        // const response2 = await fetch(categEndPoint);
+        // const myJson2 = await response2.json(); //extract JSON from the http response
         setProducts(myJson.filter(function (item) {
-            return (item.category_id == (searchvalue));
+            return (item.category_id == (searchvalue)||item.name.toLowerCase().includes(searchvalue));
         }))
 
 
