@@ -35,7 +35,7 @@ function Login() {
         console.log(xhttp.status);
 
 
-        if (xhttp.status == 200)
+        if (xhttp.status === 200)
             setLogin(true);
         
     }
@@ -62,6 +62,7 @@ function Login() {
                         label="Passssword"
                         variant="outlined"
                         sx={{ width: 300 ,alignSelf: 'center'}}
+                        type = "password"
                         value={password}
                         onChange = {handlePassword}
                     />
