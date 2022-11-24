@@ -1,20 +1,25 @@
 import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+
+import { styled } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
+
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
+
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Button } from '@mui/material';
+
+import './searchbar.css';
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -22,18 +27,20 @@ const Search = styled('div')(({ theme }) => ({
   backgroundColor: "white",
   marginRight: theme.spacing(0),
   marginLeft: theme.spacing(15),
+  paddingRight: 0,
   width: '50%',
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
+  padding: theme.spacing(0, 0),
   height: '100%',
   position: 'absolute',
   pointerEvents: 'none',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  color:'black'
+  color: 'black',
+
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -47,29 +54,30 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function PrimarySearchAppBar() {
+export default function PrimarySearchAppBar(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  
+
 
   const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const navigate = useNavigate();
+
+
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
 
   const handleMenuClose = () => {
     setAnchorEl(null);
-    handleMobileMenuClose();
+
   };
 
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
+
+  const backToHome = (event) => {
+    navigate('/');
+  }
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -92,39 +100,45 @@ export default function PrimarySearchAppBar() {
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
- 
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{paddingX:15}}>
+      <AppBar position="static" sx={{ paddingX: 15 }}>
         <Toolbar>
-          
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            BIGBASKET
-          </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
+          <Button onClick={backToHome} variant='text'>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ display: { xs: 'none', sm: 'block' }, color: 'white' }}
+            >
+              BIGBASKET
+            </Typography>
+          </Button>
+
+          <Search value={props.searchvalue} onChange={props.searchfunction}>
+            <Button onClick={props.searchbuttonfunction}>
+              <SearchIconWrapper >
+
+                <SearchIcon />
+
+              </SearchIconWrapper>
+            </Button>
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: {  md: 'flex' } }}>
+          <Box sx={{ display: { md: 'flex' } }}>
             <IconButton
               size="large"
               aria-label="shopping cart"
               color="inherit"
             >
-              
-                <ShoppingCartIcon />
-              
+
+              <ShoppingCartIcon />
+
             </IconButton>
             <IconButton
               size="large"
@@ -138,10 +152,10 @@ export default function PrimarySearchAppBar() {
               <AccountCircle />
             </IconButton>
           </Box>
-        
+
         </Toolbar>
       </AppBar>
-      
+
       {renderMenu}
     </Box>
   );
