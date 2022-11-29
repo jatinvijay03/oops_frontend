@@ -12,13 +12,11 @@ export default function ProductCard(props) {
                 <img src={props.img} className="img" />
                 <h4 className="prodname">{props.name}</h4>
                 <p className="desc">{props.description}</p>
-                <h5>${props.price}</h5>
+                <h5>₹{props.price}</h5>
                 <Button variant="contained" className ="button"
                     sx={{
                         width: 100,
                         alignSelf: 'center'
-
-
                     }}
                     
                     >Add</Button>

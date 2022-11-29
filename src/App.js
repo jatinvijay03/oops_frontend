@@ -14,7 +14,7 @@ function App() {
         <Route path='/' element={<HomePage/>}/>
         <Route path='login' element={<Login/>}/>
         <Route path='signup' element={<Signup/>}/>
-        <Route path='products/:categId' element={<ProductPage/>}/>
+        <Route path='products/:query' element={<ProductPage/>}/>
           
 
         

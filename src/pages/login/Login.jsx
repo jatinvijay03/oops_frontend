@@ -21,8 +21,8 @@ function Login() {
 
     const handlePassword = (event)=>{
         setPassword(event.target.value);
-        
-        
+
+
     }
 
 
@@ -59,7 +59,7 @@ function Login() {
                     />
 
                     <TextField
-                        label="Password"
+                        label="Passssword"
                         variant="outlined"
                         sx={{ width: 300 ,alignSelf: 'center'}}
                         type = "password"
