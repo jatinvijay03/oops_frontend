@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSearchParams } from "react-router-dom";
 
 
 import { Grid } from "@mui/material";
@@ -16,15 +15,15 @@ export default function ProductPage() {
     const categEndPoint = "http://localhost:8080/oops/api/category";
     const [products, setProducts] = useState([]);
     const [searchInput, setSearch] = useState("");
-    
+
 
 
     const params = useParams();
-    const [searchvalue,setSearchValue] = useState(params.categId);
+    const [searchvalue, setSearchValue] = useState(params.categId);
 
     const navigate = useNavigate();
 
-    
+
 
     const getCategs = async () => {
 
@@ -33,7 +32,7 @@ export default function ProductPage() {
         // const response2 = await fetch(categEndPoint);
         // const myJson2 = await response2.json(); //extract JSON from the http response
         setProducts(myJson.filter(function (item) {
-            return (item.category_id == (searchvalue)||item.name.toLowerCase().includes(searchvalue));
+            return (item.category_id == (searchvalue) || item.name.toLowerCase().includes(searchvalue));
         }))
 
 
@@ -46,11 +45,11 @@ export default function ProductPage() {
 
     const handleSearchButtonClick = (event) => {
         setSearchValue(searchInput)
-        
-        navigate('/products/'+(searchInput));
+
+        navigate('/products/' + (searchInput));
     }
 
-    
+
 
     useEffect(() => {
         getCategs();
@@ -64,7 +63,10 @@ export default function ProductPage() {
                 searchbuttonfunction={handleSearchButtonClick}
 
             />
-            <Grid container rowSpacing={10} columnSpacing={5} className="grid">
+
+            {products.length===0?
+            (<h1>No Results Found</h1>):
+            (<Grid container rowSpacing={10} columnSpacing={5} className="grid">
                 {products.map((product, index) => {
                     return <Grid key={index} item xs={3}>
                         <ProductCard
@@ -76,7 +78,7 @@ export default function ProductPage() {
                         /></Grid>
                 })}
 
-            </Grid>
+            </Grid>)}
         </div>
     )
 }
