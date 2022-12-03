@@ -6,6 +6,26 @@ import './productcard.css';
 
 export default function ProductCard(props) {
 
+
+    const cartItemEndpoint = "http://localhost:8080/oops/api/cartItem";
+
+    const postreq = async(data)=>{
+        await fetch(cartItemEndpoint,{method:'post',headers:{'Content-Type':'application/json'},body: JSON.stringify(data)})
+        }
+
+    const handleClick =(event)=>{
+        const data = 
+            [{
+                "uid":1,
+                "pid":props.prodid,
+                
+            }]
+
+           
+        postreq(data);
+       
+    }
+
     return (
         <Card sx={{ maxWidth: 345 }}>
             <Stack spacing={1} className ="Stack">
@@ -22,6 +42,7 @@ export default function ProductCard(props) {
                         width: 100,
                         alignSelf: 'center'
                     }}
+                    onClick ={handleClick}
                     
                     >Add</Button>
 

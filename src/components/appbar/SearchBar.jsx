@@ -131,6 +131,7 @@ export default function PrimarySearchAppBar(props) {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { md: 'flex' } }}>
+          <Button variant = 'text' onClick={()=>{navigate('/cart')}}>
             <IconButton
               size="large"
               aria-label="shopping cart"
@@ -140,6 +141,7 @@ export default function PrimarySearchAppBar(props) {
               <ShoppingCartIcon />
 
             </IconButton>
+            </Button>
             <IconButton
               size="large"
               edge="end"

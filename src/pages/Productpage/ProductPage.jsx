@@ -79,6 +79,7 @@ export default function ProductPage() {
                             img={product.image}
                             description={product.description}
                             price={product.price}
+                            prodid = {product.id}
                         /></Grid>
                 })}
 
