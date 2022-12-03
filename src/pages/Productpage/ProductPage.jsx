@@ -19,23 +19,27 @@ export default function ProductPage() {
 
 
     const params = useParams();
-    const [searchvalue, setSearchValue] = useState(params.categId);
+    const [searchvalue,setSearchValue] = useState(params.query);
 
     const navigate = useNavigate();
 
 
 
     const getCategs = async () => {
-
-        const response = await fetch(prodEndPoint);
-        const myJson = await response.json();
-        // const response2 = await fetch(categEndPoint);
-        // const myJson2 = await response2.json(); //extract JSON from the http response
-        setProducts(myJson.filter(function (item) {
-            return (item.category_id == (searchvalue) || item.name.toLowerCase().includes(searchvalue));
-        }))
-
-
+        
+        if(searchvalue.includes("category=")){
+            var a = searchvalue.indexOf("=");
+            const response = await fetch(prodEndPoint + "/category=" + searchvalue.substring(a+1));
+            const myJson = await response.json();
+            setProducts(myJson)
+        }
+        else{
+            const response = await fetch(prodEndPoint + "/q=" + searchvalue);
+            const myJson = await response.json();
+            // const response2 = await fetch(categEndPoint);
+            // const myJson2 = await response2.json(); //extract JSON from the http response
+            setProducts(myJson)
+        }
     }
 
     const handleSearchInput = (event) => {

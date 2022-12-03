@@ -62,7 +62,7 @@ function HomePage() {
                 <Grid container columnSpacing={0} rowSpacing={5}>
                     {categories.map((category, index) => {
                         return <Grid key={index} item xs={2}>
-                            <Button key={index} onClick={() => { navigate('products/' + category.id) }}>
+                            <Button key={index} onClick={() => { navigate('products/category=' + category.id) }}>
                                 <AvatarText
                                     key={index}
                                     name={category.name}
