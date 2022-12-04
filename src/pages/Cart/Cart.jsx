@@ -3,13 +3,16 @@ import { useEffect, useState } from "react";
 import PrimarySearchAppBar from "../../components/appbar/SearchBar";
 import CartItem from "../../components/cartitem/CartItem";
 import axios from "axios";
-
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import './cart.css'
+import { Button } from "react-bootstrap";
 
 export default function Cart() {
 
     const cartItemEndpoint = "http://localhost:8080/oops/api/cartItem/";
     const prodEndPoint = "http://localhost:8080/oops/api/product";
+
+    const navigate = useNavigate();
 
     const [products, setProducts] = useState([])
     const [itemQuantities, setitemQuantities] = useState([])
@@ -31,6 +34,10 @@ export default function Cart() {
             setProducts(produ);
             setitemQuantities(quantities);
         });
+    }
+
+    const goToCheckout =(event)=>{
+        navigate('/checkout')
     }
 
     // useEffect(() => {
@@ -72,9 +79,8 @@ export default function Cart() {
                         />
                     )
                 })}
+                <Button onClick = {goToCheckout}>Checkout</Button>
             </Stack>)}
-
-
         </div>
     )
 }
