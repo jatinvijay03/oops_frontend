@@ -16,9 +16,9 @@ export default function ProductCard(props) {
     const handleClick =(event)=>{
         const data = 
             [{
-                "uid":1,
+                "uid":localStorage.getItem('uid'),
                 "pid":props.prodid,
-                
+                quantity:1
             }]
 
            

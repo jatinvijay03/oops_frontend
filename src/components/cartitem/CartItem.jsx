@@ -16,9 +16,14 @@ export default function CartItem(props) {
                         <h3 className="name">{props.name}</h3>
                         <h4 className="desc">{props.description}</h4>
                     </Stack>
-                    <h5 className="price">
-                        {props.price}
+                    <Stack>
+                    <h5 className="quantity">
+                        {props.quantity}
                     </h5>
+                    <h5 className="price">
+                        {parseInt(props.price) * parseInt(props.quantity)}
+                    </h5>
+                    </Stack>
                 </Stack>
 
             </Card>

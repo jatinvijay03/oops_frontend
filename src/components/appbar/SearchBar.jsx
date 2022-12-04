@@ -75,6 +75,11 @@ export default function PrimarySearchAppBar(props) {
   };
 
 
+  const handleSignOut = () => {
+    localStorage.clear();
+    navigate('/login');
+  };
+
   const backToHome = (event) => {
     navigate('/');
   }
@@ -97,7 +102,7 @@ export default function PrimarySearchAppBar(props) {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleSignOut}>SignOut</MenuItem>
     </Menu>
   );
 

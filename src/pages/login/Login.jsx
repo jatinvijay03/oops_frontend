@@ -4,17 +4,19 @@ import Stack from '@mui/material/Stack';
 import './login.css';
 import { Card } from "@mui/material";
 import TextField from '@mui/material/TextField';
+import axios from 'axios';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 
 function Login() {
 
-    var XMLHttpRequest = require('xhr2')
     const [password,setPassword] = useState("");
-    const [username,setUsername] = useState("");
-    const [isLogin,setLogin] = useState(false)
+    const [email,setEmail] = useState("");
+    const [isLogin,setLogin] = useState(false);
+    const [errorn , seterrorn] = useState(false);
 
-    const handleUsername = (event)=>{
-        setUsername(event.target.value);
+    const handleEmail = (event)=>{
+        setEmail(event.target.value);
         
         
     }
@@ -26,17 +28,38 @@ function Login() {
     }
 
 
+    const navigate = useNavigate();
+
     const handlePressed =  (event)=>{
+
+        var data = JSON.stringify({
+            "email": email,
+            "password": password
+        });
         
-        var xhttp = new XMLHttpRequest();
-        xhttp.open("GET", "http://localhost:8080/api/v1/user", true);
-        xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.send();
-        console.log(xhttp.status);
+        var config = {
+            method: 'post',
+            url: 'http://localhost:8080/oops/api/user/login',
+            headers: { 
+            'Content-type': 'application/json'
+            },
+            data : data
+        };
+        
+        axios(config)
+        .then(function (response) {
+            console.log(JSON.stringify(response.data));
+            if(response.data.id){
+                setLogin(true);
+                localStorage.setItem('uid', response.data.id);
+                navigate('/')
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+            seterrorn(true);
+        });
 
-
-        if (xhttp.status === 200)
-            setLogin(true);
         
     }
 
@@ -51,15 +74,15 @@ function Login() {
                     <h1>Login</h1>
                     <TextField
 
-                        label="Username"
+                        label="Email id"
                         variant="outlined"
                         sx={{ width: 300 ,alignSelf: 'center'}}
-                        value={username}
-                        onChange = {handleUsername}
+                        value={email}
+                        onChange = {handleEmail}
                     />
 
                     <TextField
-                        label="Passssword"
+                        label="Password"
                         variant="outlined"
                         sx={{ width: 300 ,alignSelf: 'center'}}
                         type = "password"
@@ -81,6 +104,7 @@ function Login() {
                     </Button>
 
                 </Stack>
+                {errorn?(<h2>Try again</h2>) : (<h2></h2>)}
             </Card>
         </div>
 
