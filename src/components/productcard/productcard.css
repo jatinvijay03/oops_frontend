@@ -1,26 +1,30 @@
 .img{
-   
-    width :15.5rem;
-    height:13rem;
+
+    border-color:'grey';
     align-self:'center';
+    
     
 }
 
-.Stack{
-    padding: 2% 2% 7% 2%;
-}
-
 .desc{
-    height:3em;
-    padding:5% 0%;
+    height:4.5em;
+    font-size:0.7em;
+    margin:10% 0%;
+   
+    vertical-align: text-middle;
+    
 }
 
 .prodname{
-    height:2rem;
-    padding-top:5%
+    height:3rem;
+    padding:5% 0%;
 }
 
 .button{
     background-color:chartreuse;
     color: black;
+}
+
+.card{
+    padding:3%;
 }
