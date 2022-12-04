@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import PrimarySearchAppBar from "../../components/appbar/SearchBar";
 import CartItem from "../../components/cartitem/CartItem";
 import axios from "axios";
+import ListGroup from 'react-bootstrap/ListGroup';
 
 import './cart.css'
 
@@ -59,20 +60,18 @@ export default function Cart() {
             <PrimarySearchAppBar />
             {products.length===0?
             (<h1>No Items in Your Cart!</h1>):
-            (<Stack className="cart">
+            (   
+                <ListGroup variant="flush">
                 {products.map((item, index) => {
                     return (
-                        <CartItem
-                            img={item.image}
-                            price={item.price}
-                            quantity = {itemQuantities[index]}
-                            description={item.description}
-                            name={item.name}
-                            key={item.id}
-                        />
+                        <ListGroup.Item>Cras justo odio</ListGroup.Item>
+                            
+                        
                     )
                 })}
-            </Stack>)}
+                </ListGroup>
+                )
+            }
 
 
         </div>

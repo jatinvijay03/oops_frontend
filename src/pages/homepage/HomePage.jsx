@@ -57,6 +57,7 @@ function HomePage() {
         speed: 500,
         slidesToShow: 7,
         slidesToScroll: 7,
+        arrows: true ,
     };
 
 
