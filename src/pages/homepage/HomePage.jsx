@@ -48,32 +48,39 @@ function HomePage() {
 
 
 
+    if(localStorage.getItem('uid')){
+        return (
+            <div>
+                <SearchBar
+                    searchvalue={searchInput}
+                    searchfunction={handleSearchInput}
+                    searchbuttonfunction={handleSearchButtonClick}
+    
+                />
+                <Stack direction="row" spacing={5} className="Stack">
+                    <Grid container columnSpacing={0} rowSpacing={5}>
+                        {categories.map((category, index) => {
+                            return <Grid key={index} item xs={2}>
+                                <Button key={index} onClick={() => { navigate('products/category=' + category.id) }} >
+                                    <AvatarText
+                                        key={index}
+                                        name={category.name}
+                                        img={category.image}
+                                    />
+                                </Button>
+                            </Grid>
+                        })}
+                    </Grid>
+                </Stack>
+            </div>
+        )
+    }
 
-    return (
-        <div>
-            <SearchBar
-                searchvalue={searchInput}
-                searchfunction={handleSearchInput}
-                searchbuttonfunction={handleSearchButtonClick}
+    else{
+        navigate('login')
+    }
 
-            />
-            <Stack direction="row" spacing={5} className="Stack">
-                <Grid container columnSpacing={0} rowSpacing={5}>
-                    {categories.map((category, index) => {
-                        return <Grid key={index} item xs={2}>
-                            <Button key={index} onClick={() => { navigate('products/category=' + category.id) }} >
-                                <AvatarText
-                                    key={index}
-                                    name={category.name}
-                                    img={category.image}
-                                />
-                            </Button>
-                        </Grid>
-                    })}
-                </Grid>
-            </Stack>
-        </div>
-    )
+    
 }
 
 export default HomePage;

@@ -8,6 +8,9 @@ import { Card } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TextField from '@mui/material/TextField';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+
+import axios from 'axios';
 
 
 function Signup() {
@@ -21,7 +24,7 @@ function Signup() {
     const [email,setEmail] = useState("");
     const [phone,setPhone] = useState("");
     const [username,setUsername] = useState("");
-
+    const [errorn , seterrorn] = useState(false);
     const [isSignup,setSignup] = useState(false);
 
     
@@ -61,24 +64,38 @@ function Signup() {
         
     }
 
+    const navigate = useNavigate();
+
     const handlePressed =  (event)=>{
+
         var data = JSON.stringify({
             "email": email,
-            "name": fname,
             "password": password,
-            "phone": phone,
-            "username": username
+            "state": "in"
           });
-
-        
-        var xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "http://localhost:8080/api/v1/user", true);
-        xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.send(data);
-
-
-        if (xhttp.status === 200)
-            setSignup(true);
+          
+          var config = {
+            method: 'post',
+            url: 'http://localhost:8080/oops/api/user',
+            headers: { 
+              'Content-type': 'application/json'
+            },
+            data : data
+          };
+          
+          axios(config)
+          .then(function (response) {
+            if(response.status == 200){
+                setSignup(true);
+                localStorage.setItem('uid', response.data.id);
+                navigate('/login')   
+            }
+            console.log(JSON.stringify(response.data));
+          })
+          .catch(function (error) {
+            console.log(error);
+            seterrorn(true);
+          });
         
     }
 
@@ -173,9 +190,8 @@ function Signup() {
                             Sign Up
                         </Button>
                     </Grid>
-
-
                 </Grid>
+                {errorn?(<h2>Couldn't sign you up</h2>) : (<h2></h2>)}
             </Card>
         </div>
 

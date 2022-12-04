@@ -59,31 +59,39 @@ export default function ProductPage() {
         getCategs();
     }, [searchvalue]);
 
-    return (
-        <div>
-            <SearchBar
-                searchvalue={searchInput}
-                searchfunction={handleSearchInput}
-                searchbuttonfunction={handleSearchButtonClick}
-
-            />
-
-            {products.length===0?
-            (<h1>No Results Found</h1>):
-            (<Grid container rowSpacing={10} columnSpacing={5} className="grid">
-                {products.map((product, index) => {
-                    return <Grid key={index} item xs={3}>
-                        <ProductCard
-                            key={index}
-                            name={product.name}
-                            img={product.image}
-                            description={product.description}
-                            price={product.price}
-                            prodid = {product.id}
-                        /></Grid>
-                })}
-
-            </Grid>)}
-        </div>
-    )
+    if(localStorage.getItem('uid')){
+        return (
+            <div>
+                <SearchBar
+                    searchvalue={searchInput}
+                    searchfunction={handleSearchInput}
+                    searchbuttonfunction={handleSearchButtonClick}
+    
+                />
+    
+                {products.length===0?
+                (<h1>No Results Found</h1>):
+                (<Grid container rowSpacing={10} columnSpacing={5} className="grid">
+                    {products.map((product, index) => {
+                        return <Grid key={index} item xs={3}>
+                            <ProductCard
+                                key={index}
+                                name={product.name}
+                                img={product.image}
+                                description={product.description}
+                                price={product.price}
+                                prodid = {product.id}
+                            /></Grid>
+                    })}
+    
+                </Grid>)}
+            </div>
+        )
+    }
+    else{
+        return (
+            <h1>You're not logged in</h1>
+        )
+    }
+    
 }
