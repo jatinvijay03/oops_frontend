@@ -1,7 +1,16 @@
+.quantity{
+    margin-right:28%;
+    margin-left:3.5%;
+}
 
 
+.image{
+    height:7rem;
+    width:7rem;
+    margin-right:7%
+}
 
-.img{
-    height:15rem;
-    width:15rem;
+.delete{
+    color:red;
+    
 }

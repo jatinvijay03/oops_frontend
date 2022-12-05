@@ -1,3 +1,16 @@
 .grid{
     padding : 3% 10%;
 }
+
+.alert{
+    position:fixed;
+    z-index:9999;
+    width:30rem;
+    border-width:2px;
+    border-color:green;
+    top: 90%;
+    left: 64%;
+    transform: translate(-90%, -50%);
+    
+    
+}

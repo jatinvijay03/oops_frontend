@@ -1,3 +1,33 @@
 .cart{
-    margin:7% 5%;
+    margin:4% 15%;
+}
+
+h5{
+    text-align:center;
+    width:1.5rem;
+}
+
+h6{
+    margin-right:10%;
+    
+    color:grey;
+}
+
+.checkoutcard{
+    margin : 10% 0%;
+    background-color:black;
+    color:white;
+    height:4.5rem;
+    padding : 2% 10% 6%;
+
+}
+
+.checkoutbutton{
+    margin-bottom:10%;
+    width:12rem;
+    
+}
+
+p{
+    margin-top:1%;
 }
