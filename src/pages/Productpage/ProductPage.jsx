@@ -91,7 +91,7 @@ export default function ProductPage() {
 
     if (localStorage.getItem('uid')) {
         return (
-            <div>
+            <div className="products">
                 <SearchBar
                     searchvalue={searchInput}
                     searchfunction={handleSearchInput}

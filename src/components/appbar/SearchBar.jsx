@@ -73,11 +73,11 @@ function NavScrollExample(props) {
 
 
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="light" expand="lg" className='mainappbar'>
       <Container fluid>
       <Stack className='appbar' direction="row" spacing={10}>
         <button className="btn bg-transparent" variant='text' onClick={backToHome}>
-          <Navbar.Brand>BIGBASKET</Navbar.Brand></button>
+          <Navbar.Brand className='Brand'>AGARWALS</Navbar.Brand></button>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
 

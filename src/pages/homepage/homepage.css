@@ -3,7 +3,8 @@
 }
 
 .categSlider{
-   margin:5% 10%
+   margin:5% 10%;
+   padding:0% 5%
 }
 
 .slick-prev {
@@ -15,4 +16,10 @@
     right: 3% !important;
     z-index: 1;
   }
-  
+
+.home{
+  background-color: #252A34;
+  height:52rem;
+  overflow-y: hidden !important;
+  overflow-x: hidden !important; 
+}

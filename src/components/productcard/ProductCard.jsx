@@ -22,7 +22,7 @@ function ProductCard(props) {
       <ListGroup.Item>₹{props.price}</ListGroup.Item>
 
       <Card.Body>
-        <Button variant="success" onClick={props.handleClick}>Add To Cart</Button>{' '}
+        <Button onClick={props.handleClick}>Add To Cart</Button>{' '}
       </Card.Body>
     </Card>
   );

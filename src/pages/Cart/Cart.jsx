@@ -24,7 +24,7 @@ export default function Cart() {
     const [searchInput, setSearch] = useState("");
 
 
-
+    
 
     const params = useParams();
     const [searchvalue, setSearchValue] = useState(params.query);
@@ -39,6 +39,8 @@ export default function Cart() {
 
         navigate('/products/' + (searchInput));
     }
+
+
     const getCategs = async () => {
 
         if (searchvalue.includes("category=")) {
@@ -57,6 +59,7 @@ export default function Cart() {
     }
     useEffect(() => {
         getCategs();
+        
     }, [searchvalue]);
 
 
@@ -66,6 +69,7 @@ export default function Cart() {
 
     const getCartItems = async () => {
         var cartItemEndpointuid = cartItemEndpoint + localStorage.getItem('uid');
+       
         const response = await fetch(cartItemEndpointuid);
         const myJson = await response.json();
         setCart(myJson);
@@ -94,6 +98,7 @@ export default function Cart() {
 
     useEffect(() => {
         getCartItems()
+        
     }, []);
 
 
