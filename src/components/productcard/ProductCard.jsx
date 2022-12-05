@@ -1,6 +1,6 @@
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
-import { Button } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 import './productcard.css';
 import { useState } from 'react';
 import { Alert } from 'react-bootstrap';
@@ -22,7 +22,7 @@ function ProductCard(props) {
       <ListGroup.Item>₹{props.price}</ListGroup.Item>
 
       <Card.Body>
-        <Button onClick={props.handleClick}>Add To Cart</Button>{' '}
+        <Button variant="custom" onClick={props.handleClick}>Add To Cart</Button>{' '}
       </Card.Body>
     </Card>
   );

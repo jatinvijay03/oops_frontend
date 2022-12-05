@@ -202,8 +202,8 @@ export default function Login() {
                                 </div>
 
                                 <div className="text-sm ">
-                                    <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500 fgpw">
-                                        Forgot your password?
+                                    <a href="/signup" className="font-medium text-indigo-600 hover:text-indigo-500 fgpw">
+                                        Don't have an account? Sign up!
                                     </a>
                                 </div>
                             </div>
