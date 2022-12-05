@@ -2,8 +2,9 @@
 
     border-color:'grey';
     align-self:'center';
-    width:15rem;
+    width:17rem;
     height:15rem;
+    background-color:white;
     
 }
 
@@ -22,10 +23,14 @@
 }
 
 .button{
-    background-color:chartreuse;
-    color: black;
+    background-color:#e03444 !important;
+    color: white;
+    padding-top:1%;
+
 }
 
 .card{
     padding:3%;
+    background-color:#252A34;
+    color:white;
 }

@@ -6,7 +6,7 @@ function Slideshow() {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="https://www.bigbasket.com/media/uploads/banner_images/hp_m_Dairy_460px-011222.jpg?tr=w-3840,q=80"
+          src="https://i.ibb.co/1smFtSN/Whats-App-Image-2022-12-05-at-6-34-01-PM-1.jpg"
           alt="First slide"
         />
         
@@ -14,7 +14,7 @@ function Slideshow() {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="https://www.bigbasket.com/media/uploads/banner_images/HP_EMF_M_WeekendHyderabad-1600x460-221202.png?tr=w-3840,q=80"
+          src="https://i.ibb.co/K6dJrjx/Whats-App-Image-2022-12-05-at-6-34-01-PM.jpg"
           alt="Second slide"
         />
 
@@ -23,8 +23,18 @@ function Slideshow() {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="https://www.bigbasket.com/media/uploads/banner_images/hp_m_GOURMETPL_GoodDiet_460px-011222.jpg?tr=w-3840,q=80"
+          src="https://i.ibb.co/yWkNrC7/Whats-App-Image-2022-12-05-at-6-34-02-PM-1.jpg"
           alt="Third slide"
+        />
+
+        
+        
+      </Carousel.Item>
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="https://i.ibb.co/0cRNqgT/Whats-App-Image-2022-12-05-at-6-34-02-PM.jpg"
+          alt="Fourth slide"
         />
 
         

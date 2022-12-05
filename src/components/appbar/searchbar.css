@@ -1,27 +1,41 @@
-.button:active, 
- button:active,
-.button:focus, 
- button:focus,
-.button:hover, 
- button:hover{
+.btn:active, 
+ btn:active,
+.btn:focus, 
+ btn:focus,
+.btn:hover, 
+ btn:hover{
     border:none !important;
     outline:none !important;
     border-width:0px !important;
+    color:black !important;
+}
+
+.Brand{
+    color:#e03444;
 }
 
 .d-flex{
     height:3rem;
     margin-top:0%;
     margin-right:8rem;
+    color:#e03444;
+   
     
 }
 
 .appbar{
     margin:0% 10%;
     padding: 10% auto;
+    color:#e03444;
+   
 }
 
 .me-2{
     width:38rem;
+    color:#e03444;
     
+}
+
+.mainappbar{
+    background-color:#252A34 !important;
 }

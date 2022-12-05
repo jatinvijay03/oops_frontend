@@ -52,19 +52,20 @@ function HomePage() {
     }
 
     const settings = {
-        dots: true,
+        dots: false,
         infinite: true,
         speed: 500,
         slidesToShow: 7,
-        slidesToScroll: 7,
-        arrows: true ,
+        slidesToScroll: 5,
+        arrows: true,
+    
     };
 
 
 
     if (localStorage.getItem('uid')) {
         return (
-            <div>
+            <div className='home'>
                 <SearchBar
                     searchvalue={searchInput}
                     searchfunction={handleSearchInput}
