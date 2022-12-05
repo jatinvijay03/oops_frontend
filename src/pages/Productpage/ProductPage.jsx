@@ -115,8 +115,8 @@ export default function ProductPage() {
                         })}
 
                     </Grid>)}
-                {show ? (<Alert className = "alert" variant="success" onClose={() => setShow(false)} dismissible>
-                    <p><CheckCircleIcon/>Item Added to cart</p>
+                {show ? (<Alert className = "alert" variant="success" onClose={() => setShow(false)}>
+                    <p><CheckCircleIcon/>&nbsp;&nbsp;Item Added to cart</p>
                 </Alert>) : (<></>)}
             </div>
         )

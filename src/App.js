@@ -8,6 +8,7 @@ import {Routes,Route} from 'react-router-dom';
 import ProductPage from './pages/Productpage/ProductPage';
 import Cart from './pages/Cart/Cart';
 import Checkout from './pages/checkout/Checkout';
+import Wallet from './pages/wallet/Wallet';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
         <Route path='products/:query' element={<ProductPage/>}/>
         <Route path='cart' element={<Cart/>}/>
         <Route path='checkout' element={<Checkout/>}/>
-        
+        <Route path='wallet' element={<Wallet/>}/>
       </Routes> 
     </div>
   );

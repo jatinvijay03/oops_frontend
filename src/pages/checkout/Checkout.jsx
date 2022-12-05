@@ -6,6 +6,7 @@ import { Card } from "@mui/material";
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { data } from 'autoprefixer';
 
 
 function Checkout() {
@@ -28,11 +29,13 @@ function Checkout() {
     const [itemQuantities, setitemQuantities] = useState([])
     const [total, setTotal] = useState(0);
     const [isEnough, setIsEnough] = useState(true);
+    const [cart,setCart] = useState([]);
 
     const getCartItems = async () => {
         var cartItemEndpointuid = cartItemEndpoint + localStorage.getItem('uid');
         const response = await fetch(cartItemEndpointuid);
         const myJson = await response.json();
+        setCart(myJson);
 
         var produ = []
         var quantities = []
@@ -52,6 +55,31 @@ function Checkout() {
 
     }
 
+    const updateWallet =  (event)=>{
+        var data = JSON.stringify({
+            "uid": localStorage.getItem('uid'),
+            "amount": parseInt(wallet.amount) - parseInt(total)
+          });
+          
+          var config = {
+            method: 'post',
+            url: 'http://localhost:8080/oops/api/wallet/update',
+            headers: { 
+              'Content-type': 'application/json'
+            },
+            data : data
+          };
+          
+          axios(config)
+          .then(function (response) {
+            console.log(JSON.stringify(response.data));
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+          
+    }
+
     
     const getWallet = async () => {
         var walletEndpointuid = walletEndpoint + localStorage.getItem('uid');
@@ -68,9 +96,38 @@ function Checkout() {
         setAddress(myJson.address);
     }
 
+    const handleDelete = (pid)=>{
+        
+        var itemId = cart.filter(function(item){
+            return item.pid == pid;         
+        })
+        console.log(itemId[0].id);
+
+        var data = JSON.stringify({
+            "id": itemId[0].id
+        });
+    
+        var config = {
+            method: 'delete',
+            url: 'http://localhost:8080/oops/api/cartItem/delete',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            data: data
+        };
+    
+        axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
 
     const checkIfEnough = () => {
-        if(wallet.amount > total){
+        if(wallet.amount >= total){
             console.log("yoo");
             setIsEnough(true);
         }
@@ -103,8 +160,9 @@ function Checkout() {
         today = yyyy + '-' + mm + '-' + dd;
         if(isEnough){
             console.log(products);
+            var dataAll = "[";
             products.forEach((item, index) => {
-                var data = JSON.stringify([
+                var data = JSON.stringify(
                     {
                       "uid": localStorage.getItem('uid'),
                       "pid": item.id,
@@ -112,27 +170,45 @@ function Checkout() {
                       "orderDate": today,
                       "address":address
                     }
-                  ]);
-                  
-                  var config = {
+                  );
+                if(index == products.length - 1){
+                    dataAll = dataAll + data + "]";
+                }
+                else{
+                    dataAll = dataAll + data + ",";
+                }
+            });
+            console.log(dataAll)
+            var config = {
                     method: 'post',
                     url: 'http://localhost:8080/oops/api/order',
                     headers: { 
                       'Content-type': 'application/json'
                     },
-                    data : data
+                    data : dataAll
                   };
-                  
                   axios(config)
                   .then(function (response) {
                     console.log(JSON.stringify(response.data));
+                    checkIfEnough();
+                    if(isEnough){
+                        if(wallet.amount > total){
+                            products.forEach((item) => {
+                                console.log(item.id);
+                                handleDelete(item.id);
+                            });
+                            updateWallet();
+                        }
+                        else{
+                            setIsEnough(false);
+                        }
+                    }
                   })
                   .catch(function (error) {
                     console.log(error);
                   });
-                  
-            })
         }
+        
     }
 
     return(
@@ -143,7 +219,7 @@ function Checkout() {
                 sx={{ width: 400, alignSelf: 'center', }}
             >
                 <Stack spacing={5} className="stack">
-                    <h1>Order Details</h1>
+                    <h1>Place Order</h1>
                     <TextField
                         label="Address"
                         defaultValue={address}
