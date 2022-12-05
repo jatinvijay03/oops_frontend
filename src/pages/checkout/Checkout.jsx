@@ -160,53 +160,58 @@ function Checkout() {
         today = yyyy + '-' + mm + '-' + dd;
         if(isEnough){
             console.log(products);
-            var dataAll = "[";
-            products.forEach((item, index) => {
-                var data = JSON.stringify(
-                    {
-                      "uid": localStorage.getItem('uid'),
-                      "pid": item.id,
-                      "quantity": itemQuantities[index],
-                      "orderDate": today,
-                      "address":address
-                    }
-                  );
-                if(index == products.length - 1){
-                    dataAll = dataAll + data + "]";
-                }
-                else{
-                    dataAll = dataAll + data + ",";
-                }
-            });
-            console.log(dataAll)
-            var config = {
-                    method: 'post',
-                    url: 'http://localhost:8080/oops/api/order',
-                    headers: { 
-                      'Content-type': 'application/json'
-                    },
-                    data : dataAll
-                  };
-                  axios(config)
-                  .then(function (response) {
-                    console.log(JSON.stringify(response.data));
-                    checkIfEnough();
-                    if(isEnough){
-                        if(wallet.amount > total){
-                            products.forEach((item) => {
-                                console.log(item.id);
-                                handleDelete(item.id);
-                            });
-                            updateWallet();
+            if(wallet.amount > total){
+                var dataAll = "[";
+                products.forEach((item, index) => {
+                    var data = JSON.stringify(
+                        {
+                        "uid": localStorage.getItem('uid'),
+                        "pid": item.id,
+                        "quantity": itemQuantities[index],
+                        "orderDate": today,
+                        "address":address
                         }
-                        else{
-                            setIsEnough(false);
-                        }
+                    );
+                    if(index == products.length - 1){
+                        dataAll = dataAll + data + "]";
                     }
-                  })
-                  .catch(function (error) {
-                    console.log(error);
-                  });
+                    else{
+                        dataAll = dataAll + data + ",";
+                    }
+                });
+                console.log(dataAll)
+                var config = {
+                        method: 'post',
+                        url: 'http://localhost:8080/oops/api/order',
+                        headers: { 
+                        'Content-type': 'application/json'
+                        },
+                        data : dataAll
+                    };
+                    axios(config)
+                    .then(function (response) {
+                        console.log(JSON.stringify(response.data));
+                        checkIfEnough();
+                        if(isEnough){
+                            if(wallet.amount > total){
+                                products.forEach((item) => {
+                                    console.log(item.id);
+                                    handleDelete(item.id);
+                                });
+                                updateWallet();
+                            }
+                            else{
+                                setIsEnough(false);
+                            }
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+            else{
+                setIsEnough(false);
+            }
         }
         
     }
