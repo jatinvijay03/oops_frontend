@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import Button from "@mui/material/Button";
 import Stack from '@mui/material/Stack';
 import './checkout.css';
@@ -10,60 +10,132 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 function Checkout() {
 
-    const [password,setPassword] = useState("");
-    const [email,setEmail] = useState("");
-    const [isLogin,setLogin] = useState(false);
-    const [errorn , seterrorn] = useState(false);
+    const [address,setAddress] = useState("");
 
-    const handleEmail = (event)=>{
-        setEmail(event.target.value);
-        
-        
+
+    const handleAddress = (event)=>{
+        setAddress(event.target.value);
     }
 
-    const handlePassword = (event)=>{
-        setPassword(event.target.value);
+    const cartItemEndpoint = "http://localhost:8080/oops/api/cartItem/";
+    const walletEndpoint = "http://localhost:8080/oops/api/wallet/";
+    const prodEndPoint = "http://localhost:8080/oops/api/product";
+    const userEndPoint = "http://localhost:8080/oops/api/user/";
 
+
+    const [products, setProducts] = useState([])
+    const [wallet, setWallet] = useState(0)
+    const [itemQuantities, setitemQuantities] = useState([])
+    const [total, setTotal] = useState(0);
+    const [isEnough, setIsEnough] = useState(true);
+
+    const getCartItems = async () => {
+        var cartItemEndpointuid = cartItemEndpoint + localStorage.getItem('uid');
+        const response = await fetch(cartItemEndpointuid);
+        const myJson = await response.json();
+
+        var produ = []
+        var quantities = []
+        var subtotal = 0;
+
+        myJson.forEach(async (element) => {
+            const response2 = await fetch(prodEndPoint + "/pid=" + element.pid);
+            const myJson2 = await response2.json();
+            subtotal += (myJson2.price*element.quantity);
+            produ.push(myJson2);
+            quantities.push(element.quantity);
+            setProducts(produ);
+            setitemQuantities(quantities);
+            setTotal(subtotal);
+            console.log(total);
+        });
 
     }
+
+    
+    const getWallet = async () => {
+        var walletEndpointuid = walletEndpoint + localStorage.getItem('uid');
+        const response = await fetch(walletEndpointuid);
+        const myJson = await response.json();
+        setWallet(myJson);
+    }
+
+    const getAddress = async () => {
+        var userEndPointuid = userEndPoint + localStorage.getItem('uid');
+        const response = await fetch(userEndPointuid);
+        const myJson = await response.json();
+        console.log(myJson);
+        setAddress(myJson.address);
+    }
+
+
+    const checkIfEnough = () => {
+        if(wallet.amount > total){
+            console.log("yoo");
+            setIsEnough(true);
+        }
+        else{
+            console.log("nooo");
+            console.log(wallet, total);
+            setIsEnough(false);
+        }
+    }
+
+
+    useEffect(() => {
+        getCartItems();
+        getWallet();
+        getAddress();
+    }, [])
+
+    
+    
 
 
     const navigate = useNavigate();
 
     const handlePressed =  (event)=>{
-
-        var data = JSON.stringify({
-            "email": email,
-            "password": password
-        });
-        
-        var config = {
-            method: 'post',
-            url: 'http://localhost:8080/oops/api/user/login',
-            headers: { 
-            'Content-type': 'application/json'
-            },
-            data : data
-        };
-        
-        axios(config)
-        .then(function (response) {
-            console.log(JSON.stringify(response.data));
-            if(response.data.id){
-                setLogin(true);
-                localStorage.setItem('uid', response.data.id);
-                navigate('/')
-            }
-        })
-        .catch(function (error) {
-            console.log(error);
-            seterrorn(true);
-        });
-
-        
+        checkIfEnough();
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+        today = yyyy + '-' + mm + '-' + dd;
+        if(isEnough){
+            console.log(products);
+            products.forEach((item, index) => {
+                var data = JSON.stringify([
+                    {
+                      "uid": localStorage.getItem('uid'),
+                      "pid": item.id,
+                      "quantity": itemQuantities[index],
+                      "orderDate": today,
+                      "address":address
+                    }
+                  ]);
+                  
+                  var config = {
+                    method: 'post',
+                    url: 'http://localhost:8080/oops/api/order',
+                    headers: { 
+                      'Content-type': 'application/json'
+                    },
+                    data : data
+                  };
+                  
+                  axios(config)
+                  .then(function (response) {
+                    console.log(JSON.stringify(response.data));
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
+                  
+            })
+        }
     }
 
-    return isLogin?(<h1>You Are Logged In</h1>):(
+    return(
         <div className="Login">
             <Card
                 variant="outlined"
@@ -71,25 +143,15 @@ function Checkout() {
                 sx={{ width: 400, alignSelf: 'center', }}
             >
                 <Stack spacing={5} className="stack">
-                    <h1>Login</h1>
+                    <h1>Order Details</h1>
                     <TextField
-
-                        label="Email id"
+                        label="Address"
+                        defaultValue={address}
                         variant="outlined"
                         sx={{ width: 300 ,alignSelf: 'center'}}
-                        value={email}
-                        onChange = {handleEmail}
+                        value={address}
+                        onChange = {handleAddress}
                     />
-
-                    <TextField
-                        label="Password"
-                        variant="outlined"
-                        sx={{ width: 300 ,alignSelf: 'center'}}
-                        type = "password"
-                        value={password}
-                        onChange = {handlePassword}
-                    />
-
                     <Button
                         variant="contained"
                         sx={{
@@ -100,11 +162,12 @@ function Checkout() {
                         onClick = {handlePressed}
 
                     >
-                        Login
+                        Place order
                     </Button>
-
+                    <h1>{total}</h1>
+                    <h2>{wallet.amount}</h2>
                 </Stack>
-                {errorn?(<h2>Try again</h2>) : (<h2></h2>)}
+                {isEnough?<h2></h2> : <h2>Funds not Sufficient, click to add money to your wallet</h2>}
             </Card>
         </div>
 
