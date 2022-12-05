@@ -97,7 +97,7 @@ function NavScrollExample(props) {
                 onChange={props.searchfunction}
                 
               />
-              <Button variant="outline-success" onClick={props.searchbuttonfunction}>Search</Button>
+              <Button variant="outline-danger" onClick={props.searchbuttonfunction}>Search</Button>
             </Form>
             
               <IconButton

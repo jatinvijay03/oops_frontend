@@ -2,7 +2,7 @@
 
     border-color:'grey';
     align-self:'center';
-    width:15rem;
+    width:17rem;
     height:15rem;
     background-color:white;
     
@@ -23,7 +23,7 @@
 }
 
 .button{
-    background-color:#FF2E63 !important;
+    background-color:#e03444 !important;
     color: white;
     padding-top:1%;
 

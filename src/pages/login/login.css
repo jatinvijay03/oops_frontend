@@ -1,14 +1,22 @@
-.Login{
-    margin-top: 10em;
+.login{
+    width:50rem;
+    position:absolute;
+    margin:5% auto;
+    background-color:#FFFFFF !important;
+}
+
+.group{
+    background-color:#e03444 !important;
+}
+
+.fgpw{
+    color:#e03444 !important;
+}
+
+.loginpage{
+    height: 100vh;
+    padding-left: 22.5%;
     
-}
-
-.Login h1{
-    padding-bottom: 0%;
-    margin-bottom: 0%;
-}
-
-.Login .Card{
-    margin: 0px auto;
-    padding-bottom: 4%;
+    background-color:#e03444;
+    
 }

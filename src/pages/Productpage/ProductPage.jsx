@@ -103,7 +103,7 @@ export default function ProductPage() {
                     (<h1>No Results Found</h1>) :
                     (<Grid container rowSpacing={10} columnSpacing={5} className="grid">
                         {products.map((product, index) => {
-                            return <Grid key={index} item xs={3}>
+                            return <Grid key={index} item xs={3} rowSpacing={0}>
                                 <ProductCard
                                     key={index}
                                     name={product.name}

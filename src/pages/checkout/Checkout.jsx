@@ -223,7 +223,7 @@ function Checkout() {
                 className="Card"
                 sx={{ width: 400, alignSelf: 'center', }}
             >
-                <Stack spacing={5} className="stack">
+                <Stack spacing={5} className="stack" divider={<hr></hr>}>
                     <h1>Place Order</h1>
                     <TextField
                         label="Address"
