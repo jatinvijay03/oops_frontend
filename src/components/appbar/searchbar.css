@@ -11,28 +11,29 @@
 }
 
 .Brand{
-    color:#e03444;
+    color:white;
 }
 
 .d-flex{
     height:3rem;
     margin-top:0%;
     margin-right:8rem;
-    color:#e03444;
+    color:white
    
     
 }
 
+
 .appbar{
     margin:0% 10%;
     padding: 10% auto;
-    color:#e03444;
+    color:white;
    
 }
 
 .me-2{
     width:38rem;
-    color:#e03444;
+    color:white;
     
 }
 

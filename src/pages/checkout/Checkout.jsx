@@ -161,6 +161,8 @@ function Checkout() {
         if(isEnough){
             console.log(products);
             if(wallet.amount > total){
+                var mBody = "Thanks for shopping with Aggarwal's Online Supermarket, \nYour order details are as follows, \nDelivery Address: "
+                mBody = mBody + address + "\n"
                 var dataAll = "[";
                 products.forEach((item, index) => {
                     var data = JSON.stringify(
@@ -174,9 +176,11 @@ function Checkout() {
                     );
                     if(index == products.length - 1){
                         dataAll = dataAll + data + "]";
+                        mBody = mBody + item.name + " x " + itemQuantities[index] + "\n"
                     }
                     else{
                         dataAll = dataAll + data + ",";
+                        mBody = mBody + item.name + " x " + itemQuantities[index] + "\n"
                     }
                 });
                 console.log(dataAll)
@@ -199,6 +203,29 @@ function Checkout() {
                                     handleDelete(item.id);
                                 });
                                 updateWallet();
+                                var data = JSON.stringify({
+                                    "recipient": localStorage.getItem('email'),
+                                    "msgBody": mBody,
+                                    "subject": "Aggarwal's Online Super Market Order Placed"
+                                  });
+                                  
+                                  var config = {
+                                    method: 'post',
+                                    url: 'http://localhost:8080/oops/api/sendEmail',
+                                    headers: { 
+                                      'Content-type': 'application/json'
+                                    },
+                                    data : data
+                                  };
+                                  
+                                  axios(config)
+                                  .then(function (response) {
+                                    console.log(JSON.stringify(response.data));
+                                  })
+                                  .catch(function (error) {
+                                    console.log(error);
+                                  });
+                                  
                             }
                             else{
                                 setIsEnough(false);

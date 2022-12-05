@@ -124,18 +124,19 @@ export default function Login() {
         };
 
         axios(config)
-            .then(function (response) {
-                console.log(JSON.stringify(response.data));
-                if (response.data.id) {
-                    setLogin(true);
-                    localStorage.setItem('uid', response.data.id);
-                    navigate('/')
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-                seterrorn(true);
-            });
+        .then(function (response) {
+            console.log(JSON.stringify(response.data));
+            if(response.data.id){
+                setLogin(true);
+                localStorage.setItem('uid', response.data.id);
+                localStorage.setItem('email', response.data.email);
+                navigate('/')
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+            seterrorn(true);
+        });
 
 
     }
@@ -201,8 +202,8 @@ export default function Login() {
                                 </div>
 
                                 <div className="text-sm ">
-                                    <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500 fgpw">
-                                        Forgot your password?
+                                    <a href="/signup" className="font-medium text-indigo-600 hover:text-indigo-500 fgpw">
+                                        Don't have an account? Sign up!
                                     </a>
                                 </div>
                             </div>
