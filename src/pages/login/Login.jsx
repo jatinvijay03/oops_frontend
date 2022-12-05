@@ -52,6 +52,7 @@ function Login() {
             if(response.data.id){
                 setLogin(true);
                 localStorage.setItem('uid', response.data.id);
+                localStorage.setItem('email', response.data.email);
                 navigate('/')
             }
         })

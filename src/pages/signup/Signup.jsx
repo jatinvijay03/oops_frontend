@@ -89,6 +89,7 @@ function Signup() {
                 setSignup(true);
                 console.log(response.data);
                 localStorage.setItem('uid', response.data.id);
+                localStorage.setItem('email', response.data.email);
                 var data1 = JSON.stringify({
                     "uid": response.data.id,
                     "amount": 1000,
@@ -106,6 +107,28 @@ function Signup() {
                   
                   axios(config1)
                   .then(function (response) {
+                    var data = JSON.stringify({
+                        "recipient": localStorage.getItem('email'),
+                        "msgBody": "Welcome to Aggarwal's Online Super Market! We hope you enjoy shopping with us!",
+                        "subject": "Aggarwal's Online Super Market Account Created"
+                      });
+                      
+                      var config = {
+                        method: 'post',
+                        url: 'http://localhost:8080/oops/api/sendEmail',
+                        headers: { 
+                          'Content-type': 'application/json'
+                        },
+                        data : data
+                      };
+                      
+                      axios(config)
+                      .then(function (response) {
+                        console.log(JSON.stringify(response.data));
+                      })
+                      .catch(function (error) {
+                        console.log(error);
+                      });
                     navigate('/')
                   })
                   .catch(function (error) {
