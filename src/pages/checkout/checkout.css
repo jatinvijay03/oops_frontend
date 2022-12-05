@@ -1,14 +1,14 @@
-.Signup{
-    margin-top: 5em;
+.Login{
+    margin-top: 10em;
     
 }
 
-.Signup h1{
+.Login h1{
     padding-bottom: 0%;
     margin-bottom: 0%;
 }
 
-.Signup .Card{
+.Login .Card{
     margin: 0px auto;
     padding-bottom: 4%;
 }

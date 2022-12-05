@@ -23,7 +23,7 @@ function Signup() {
     const [confirmpassword,setconfirmPassword] = useState("");
     const [email,setEmail] = useState("");
     const [phone,setPhone] = useState("");
-    const [username,setUsername] = useState("");
+    const [address,setAddress] = useState("");
     const [errorn , seterrorn] = useState(false);
     const [isSignup,setSignup] = useState(false);
 
@@ -52,8 +52,8 @@ function Signup() {
         
     }
 
-    const handleUsername = (event)=>{
-        setUsername(event.target.value);
+    const handleAddress = (event)=>{
+        setAddress(event.target.value);
         
         
     }
@@ -71,7 +71,7 @@ function Signup() {
         var data = JSON.stringify({
             "email": email,
             "password": password,
-            "state": "in"
+            "address": address,
           });
           
           var config = {
@@ -87,8 +87,31 @@ function Signup() {
           .then(function (response) {
             if(response.status == 200){
                 setSignup(true);
+                console.log(response.data);
                 localStorage.setItem('uid', response.data.id);
-                navigate('/login')   
+                var data1 = JSON.stringify({
+                    "uid": response.data.id,
+                    "amount": 1000,
+                    "pin": response.data.password
+                  });
+                  
+                  var config1 = {
+                    method: 'post',
+                    url: 'http://localhost:8080/oops/api/wallet',
+                    headers: { 
+                      'Content-type': 'application/json'
+                    },
+                    data : data1
+                  };
+                  
+                  axios(config1)
+                  .then(function (response) {
+                    navigate('/')
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
+                
             }
             console.log(JSON.stringify(response.data));
           })
@@ -97,6 +120,8 @@ function Signup() {
             seterrorn(true);
           });
         
+          
+          
     }
 
     return isSignup?(<h1>Youre signuped</h1>):(
@@ -153,9 +178,9 @@ function Signup() {
                         <TextField
                             variant="outlined"
                             sx={{ width: 300 }}
-                            label="Username"
-                            value = {username}
-                            onChange = {handleUsername} />
+                            label="Address"
+                            value = {address}
+                            onChange = {handleAddress} />
                     </Grid>
                     <Grid item xs={4} />
                     <Grid item xs={6}>
