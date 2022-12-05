@@ -3,11 +3,9 @@ import { useEffect, useState } from "react";
 import PrimarySearchAppBar from "../../components/appbar/SearchBar";
 import CartItem from "../../components/cartitem/CartItem";
 import axios from "axios";
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './cart.css'
 import { Button } from "react-bootstrap";
-import { ListGroup } from "react-bootstrap";
-import { CleaningServices, PropaneSharp } from "@mui/icons-material";
 import { Grid } from "@mui/material";
 import { Card } from "react-bootstrap";
 
@@ -23,6 +21,44 @@ export default function Cart() {
     const [itemQuantities, setitemQuantities] = useState([])
     const [total, setTotal] = useState(0);
     const [cart,setCart] = useState([]);
+    const [searchInput, setSearch] = useState("");
+
+
+
+
+    const params = useParams();
+    const [searchvalue, setSearchValue] = useState(params.query);
+
+    const handleSearchInput = (event) => {
+        setSearch(event.target.value);
+
+    }
+
+    const handleSearchButtonClick = (event) => {
+        setSearchValue(searchInput)
+
+        navigate('/products/' + (searchInput));
+    }
+    const getCategs = async () => {
+
+        if (searchvalue.includes("category=")) {
+            var a = searchvalue.indexOf("=");
+            const response = await fetch(prodEndPoint + "/category=" + searchvalue.substring(a + 1));
+            const myJson = await response.json();
+            setProducts(myJson)
+        }
+        else {
+            const response = await fetch(prodEndPoint + "/q=" + searchvalue);
+            const myJson = await response.json();
+            // const response2 = await fetch(categEndPoint);
+            // const myJson2 = await response2.json(); //extract JSON from the http response
+            setProducts(myJson)
+        }
+    }
+    useEffect(() => {
+        getCategs();
+    }, [searchvalue]);
+
 
     
 
@@ -94,14 +130,17 @@ export default function Cart() {
 
     return (
         <div className="Cart">
-            <PrimarySearchAppBar />
+            <PrimarySearchAppBar
+            searchvalue={searchInput}
+                    searchfunction={handleSearchInput}
+                    searchbuttonfunction={handleSearchButtonClick}/>
             {products.length === 0 ?
                 (<h1>No Items in Your Cart!</h1>) :
                 (<div className="cart">
                     <Card className="checkoutcard">
                         <Stack direction='row' sx={{justifyContent:"space-between"}}>
                             <p><b>Subtotal: ₹{total}</b></p>
-                            <Button onClick={goToCheckout} variant='danger' className="checkoutbutton">Checkout</Button>
+                            <Button onClick={goToCheckout} className="checkoutbutton">Checkout</Button>
                         </Stack>
                     </Card>
 

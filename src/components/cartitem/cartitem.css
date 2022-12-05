@@ -10,7 +10,8 @@
     margin-right:7%
 }
 
-.delete{
-    color:red;
+.delete,.delete:active,.delete:hover,.delete:visited{
+    color:#e03444;
+    border-width:0px !important;
     
 }

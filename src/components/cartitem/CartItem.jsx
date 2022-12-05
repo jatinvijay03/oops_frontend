@@ -31,7 +31,7 @@ export default function CartItem(props) {
                 <Stack spacing={2}><h5 className="price">
                     ₹{+parseInt(props.price) * parseInt(props.quantity)}
                 </h5>
-                    <Button onClick={props.handledelete} variant="outline-light">
+                    <Button onClick={props.handledelete} variant="text">
                         <DeleteIcon className="delete" sx={{ alignSelf: "center" }} />
                     </Button>
                 </Stack>

@@ -22,12 +22,13 @@ h6{
 
 }
 
-.checkoutbutton{
-    margin-bottom:10%;
-    width:12rem;
-    
-}
-
 p{
     margin-top:1%;
+}
+
+.checkoutbutton, .checkoutbutton:hover, .checkoutbutton:active, .checkoutbutton:visited {
+    background-color: #e03444 !important;
+    border-width:0px !important;
+    margin-bottom:10%;
+    width:12rem;
 }

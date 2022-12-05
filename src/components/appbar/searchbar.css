@@ -1,0 +1,27 @@
+.button:active, 
+ button:active,
+.button:focus, 
+ button:focus,
+.button:hover, 
+ button:hover{
+    border:none !important;
+    outline:none !important;
+    border-width:0px !important;
+}
+
+.d-flex{
+    height:3rem;
+    margin-top:0%;
+    margin-right:8rem;
+    
+}
+
+.appbar{
+    margin:0% 10%;
+    padding: 10% auto;
+}
+
+.me-2{
+    width:38rem;
+    
+}
