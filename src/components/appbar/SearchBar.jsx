@@ -79,10 +79,10 @@ function NavScrollExample(props) {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={()=>{navigate('/profile')}}>Profile</MenuItem>
-      <MenuItem onClick={handleSignOut}>SignOut</MenuItem>
       <MenuItem onClick={handleWallet}>Your Wallet</MenuItem>
       {(localStorage.getItem('role') == 'manager' || localStorage.getItem('role') == 'admin')?<MenuItem onClick={handleAddProduct}>Add Products</MenuItem>:<></>}
       {(localStorage.getItem('role') == 'manager' || localStorage.getItem('role') == 'admin')?<MenuItem onClick={handleAddCategory}>Add Categories</MenuItem>:<></>}
+      <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
     </Menu>
   );
 
