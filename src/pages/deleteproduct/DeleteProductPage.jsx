@@ -21,6 +21,7 @@ export default function DeleteProductPage() {
     const [products, setProducts] = useState([]);
     const [searchInput, setSearch] = useState("");
     const [prods, setProds] = useState([]);
+    
 
 
     const prodEndPoint = "http://localhost:8080/oops/api/product";

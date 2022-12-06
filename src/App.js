@@ -16,6 +16,8 @@ import DeleteProductPage from './pages/deleteproduct/DeleteProductPage';
 
 import AdminOrder from './pages/orderpage/AdminOrder';
 import ManagerAps from './pages/manageraps/ManagerAps';
+import Users from './pages/users/Users';
+import CreateUser from './pages/signup/CreateUser'
 
 
 
@@ -39,6 +41,8 @@ function App() {
 
         <Route path='adminOrders' element={<AdminOrder/>}/>
         <Route path='applications' element={<ManagerAps/>}/>
+        <Route path='users' element={<Users/>}/>
+        <Route path='createuser' element={<CreateUser/>}/>
 
       </Routes> 
     </div>
