@@ -46,6 +46,10 @@ function NavScrollExample(props) {
     localStorage.clear();
     navigate('/login');
   };
+  const handleWallet = () => {
+    
+    navigate('/wallet');
+  };
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -66,6 +70,7 @@ function NavScrollExample(props) {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleSignOut}>SignOut</MenuItem>
+      <MenuItem onClick={handleWallet}>Your Wallet</MenuItem>
     </Menu>
   );
 
@@ -77,7 +82,7 @@ function NavScrollExample(props) {
       <Container fluid>
       <Stack className='appbar' direction="row" spacing={10}>
         <button className="btn bg-transparent" variant='text' onClick={backToHome}>
-          <Navbar.Brand className='Brand'>AGARWALS</Navbar.Brand></button>
+          <Navbar.Brand className='Brand'>AGGARWALS</Navbar.Brand></button>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
 
@@ -97,7 +102,7 @@ function NavScrollExample(props) {
                 onChange={props.searchfunction}
                 
               />
-              <Button variant="outline-danger" onClick={props.searchbuttonfunction}>Search</Button>
+              <Button variant="outline-light" onClick={props.searchbuttonfunction}>Search</Button>
             </Form>
             
               <IconButton

@@ -1,5 +1,5 @@
 
-import {useState} from 'react';
+import { useState } from 'react';
 
 
 import Button from "@mui/material/Button";
@@ -13,216 +13,269 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 
 
-function Signup() {
 
-    var XMLHttpRequest = require('xhr2')
+export default function Signup() {
 
-    const [fname,setfName] = useState("");
-    const [lname,setlName] = useState("");
-    const [password,setPassword] = useState("");
-    const [confirmpassword,setconfirmPassword] = useState("");
-    const [email,setEmail] = useState("");
-    const [phone,setPhone] = useState("");
-    const [address,setAddress] = useState("");
-    const [errorn , seterrorn] = useState(false);
-    const [isSignup,setSignup] = useState(false);
 
-    
+    const [fname, setfName] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmpassword, setconfirmPassword] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [address, setAddress] = useState("");
+    const [errorn, seterrorn] = useState(false);
 
-    const handlefName = (event)=>{
+
+
+
+    const handlefName = (event) => {
         setfName(event.target.value);
-        
+
     }
 
-    const handlelName = (event)=>{
-        setlName(event.target.value);
-        
-        
-    }
-
-    const handleEmail = (event)=>{
+    const handleEmail = (event) => {
         setEmail(event.target.value);
-        
-        
+
+
     }
 
-    const handlePhone = (event)=>{
+    const handlePhone = (event) => {
         setPhone(event.target.value);
-        
-        
+
+
     }
 
-    const handleAddress = (event)=>{
+    const handleAddress = (event) => {
         setAddress(event.target.value);
-        
-        
+
+
     }
 
-    const handlePassword = (event)=>{
+    const handlePassword = (event) => {
         setPassword(event.target.value);
-        
-        
+
+
+    }
+    const handleConfirm = (event)=>{
+        setconfirmPassword(event.target.vale)
     }
 
     const navigate = useNavigate();
 
-    const handlePressed =  (event)=>{
+    
+
+    const handlePressed = (event) => {
+
+
 
         var data = JSON.stringify({
             "email": email,
             "password": password,
             "address": address,
-          });
-          
-          var config = {
+            
+        });
+
+        var config = {
             method: 'post',
             url: 'http://localhost:8080/oops/api/user',
-            headers: { 
-              'Content-type': 'application/json'
+            headers: {
+                'Content-type': 'application/json'
             },
-            data : data
-          };
-          
-          axios(config)
-          .then(function (response) {
-            if(response.status == 200){
-                setSignup(true);
-                console.log(response.data);
-                localStorage.setItem('uid', response.data.id);
-                var data1 = JSON.stringify({
-                    "uid": response.data.id,
-                    "amount": 1000,
-                    "pin": response.data.password
-                  });
-                  
-                  var config1 = {
-                    method: 'post',
-                    url: 'http://localhost:8080/oops/api/wallet',
-                    headers: { 
-                      'Content-type': 'application/json'
-                    },
-                    data : data1
-                  };
-                  
-                  axios(config1)
-                  .then(function (response) {
-                    navigate('/')
-                  })
-                  .catch(function (error) {
-                    console.log(error);
-                  });
-                
-            }
-            console.log(JSON.stringify(response.data));
-          })
-          .catch(function (error) {
-            console.log(error);
-            seterrorn(true);
-          });
-        
-          
-          
-    }
+            data: data
+        };
 
-    return isSignup?(<h1>Youre signuped</h1>):(
-        <div className="Signup">
-            <Card
-                variant="outlined"
-                className="Card"
-                sx={{ width: 600, alignSelf: 'center', }}
+        axios(config)
+            .then(function (response) {
+                if (response.status == 200) {
+                    console.log(response.data);
+                    localStorage.setItem('uid', response.data.id);
+                    localStorage.setItem('email', response.data.email);
+                    var data1 = JSON.stringify({
+                        "uid": response.data.id,
+                        "amount": 1000,
+                        "pin": response.data.password
+                    });
 
-            >
-                <Grid
-                    container rowSpacing={5} columnSpacing={0}
-                >
-                    <Grid item xs={12}>
-                        <h1>Sign Up</h1>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            variant="outlined"
-                            sx={{ width: 200 }}
-                            label="First Name"
-                            value = {fname}
-                            onChange = {handlefName}
-                             />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            variant="outlined"
-                            sx={{ width: 200 }}
-                            label="Last Name"
-                            value = {lname}
-                            onChange = {handlelName} />
-                    </Grid>
-                    <Grid item xs={8}>
-                        <TextField
-                            variant="outlined"
-                            sx={{ width: 300 }}
-                            label="Email"
-                            value = {email}
-                            onChange = {handleEmail} />
-                    </Grid>
-                    <Grid item xs={4}  >
-                        <Box display="flex" justifyContent="flex-start">
-                            <TextField
-                                variant="outlined"
-                                sx={{ width: 150 }}
-                                label="Phone No."
-                                value = {phone}
-                                onChange = {handlePhone}
+                    var config1 = {
+                        method: 'post',
+                        url: 'http://localhost:8080/oops/api/wallet',
+                        headers: {
+                            'Content-type': 'application/json'
+                        },
+                        data: data1
+                    };
+
+                    axios(config1)
+                        .then(function (response) {
+                            var data = JSON.stringify({
+                                "recipient": localStorage.getItem('email'),
+                                "msgBody": "Welcome to Aggarwal's Online Super Market! We hope you enjoy shopping with us!",
+                                "subject": "Aggarwal's Online Super Market Account Created"
+                            });
+
+                            var config = {
+                                method: 'post',
+                                url: 'http://localhost:8080/oops/api/sendEmail',
+                                headers: {
+                                    'Content-type': 'application/json'
+                                },
+                                data: data
+                            };
+
+                            axios(config)
+                                .then(function (response) {
+                                    console.log(JSON.stringify(response.data));
+                                })
+                                .catch(function (error) {
+                                    console.log(error);
+                                });
+                            navigate('/')
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+
+                }
+                console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+                console.log(error);
+                seterrorn(true);
+            });}
+
+
+
+
+
+        return (
+            <>
+                <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+                    <div className="w-full max-w-md space-y-8">
+                        <div>
+                            <img
+                                className="mx-auto h-12 w-auto"
+                                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                                alt="Your Company"
                             />
-                        </Box>
-                    </Grid>
-                    <Grid item xs={8}>
-                        <TextField
-                            variant="outlined"
-                            sx={{ width: 300 }}
-                            label="Address"
-                            value = {address}
-                            onChange = {handleAddress} />
-                    </Grid>
-                    <Grid item xs={4} />
-                    <Grid item xs={6}>
-                        <TextField
-                            variant="outlined"
-                            sx={{ width: 200 }}
-                            label="Password"
-                            type="password"
-                            value = {password}
-                            onChange = {handlePassword}
-                        />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            variant="outlined"
-                            sx={{ width: 200 }}
-                            label="Confirm Password"
-                            type="password"
-                             />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button
-                            variant="contained"
-                            sx={{
-                                width: 100,
-                                alignSelf: 'center'
+                            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+                                Create Your Account
+                            </h2>
 
-                            }}
-                            onClick = {handlePressed}
+                        </div>
+                        <form className="mt-8 space-y-6" action="#" method="POST">
+                            <input type="hidden" name="remember" defaultValue="true" />
+                            <div className="-space-y-px rounded-md shadow-sm">
+                                <div>
+                                    <input
+                                        id="name"
+                                        name="Name"
+                                        type="Name"
+                                        autoComplete="off"
+                                        required
+                                        className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                        placeholder="Name"
+                                        value={fname}
+                                        onChange={handlefName}
+                                    />
+                                </div>
+                                <div>
+                                    
+                                    <input
+                                        id="email-address"
+                                        name="email"
+                                        type="email"
+                                        autocomplete="off"
+                                        required
+                                        className="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                        placeholder="Email address"
+                                        value={email}
+                                        onChange={handleEmail}
+                                    />
+                                </div>
+                                <div>
+                                    
+                                    <input
+                                        id="password"
+                                        name="password"
+                                        type="password"
+                                        autocomplete="off"
+                                        required
+                                        className="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                        placeholder="Password"
+                                        value={password}
+                                        onChange={handlePassword}
+                                    />
+                                </div>
+                                <div>
+                                   
+                                    <input
+                                        id="confirm"
+                                        name="confirm"
+                                        type="password"
+                                        autocomplete="off"
+                                        required
+                                        className="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                        placeholder="Confirm Password"
+                                        value={confirmpassword}
+                                        onChange={handleConfirm}
+                                    />
+                                </div>
+                                <div>
+                                    <input
+                                        id="address"
+                                        name="address"
+                                        type="address"
+                                        autocomplete="off"
 
-                        >
-                            Sign Up
-                        </Button>
-                    </Grid>
-                </Grid>
-                {errorn?(<h2>Couldn't sign you up</h2>) : (<h2></h2>)}
-            </Card>
-        </div>
+                                        className="relative block w-full appearance-none rounded-none  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                        placeholder="Address"
+                                        value={address}
+                                        onChange ={handleAddress}
+                                    />
+                                </div>
+                                <div>
+                                   
+                                    <input
+                                        id="phone"
+                                        name="phone"
+                                        type="phone"
+                                        autocomplete="off"
+                                        required
+                                        className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                        placeholder="Phone No."
+                                        value={phone}
+                                        onChange ={handlePhone}
+                                    />
+                                </div>
+                            </div>
 
-    );
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center">
+                                    <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+                                        {errorn ? (<h2>Couldn't sign you up</h2>) : (<h2></h2>)}
+                                    </label>
+                                </div>
 
+                                <div className="text-sm">
+                                    <a href="/login" className="font-medium text-indigo-600 hover:text-indigo-500 fgpw">
+                                        Already have an account? Login
+                                    </a>
+                                </div>
+                            </div>
 
-}
+                            <div>
+                                <Button
+                                    
+                                    onClick={handlePressed}
+                                    className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                >
 
-export default Signup;
+                                    Sign in
+                                </Button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </>
+        )
+    }

@@ -1,14 +1,32 @@
-.Login{
-    margin-top: 10em;
+.wallet{
+    
+    height:100vh
     
 }
 
-.Login h1{
-    padding-bottom: 0%;
-    margin-bottom: 0%;
+.Card{
+    margin: 10% auto;
+    padding-bottom: 4%;
+    width: 40rem;
+    
 }
 
-.Login .Card{
-    margin: 0px auto;
-    padding-bottom: 4%;
+.alert{
+    position:fixed;
+    z-index:9;
+    width:30rem;
+    border-width:2px;
+    border-color:green;
+    top: 90%;
+    left: 64%;
+    transform: translate(-90%, -50%);   
+}
+
+.error{
+    border-color:red;
+    z-index:10;
+}
+
+.text-left{
+    margin-top:5%;
 }

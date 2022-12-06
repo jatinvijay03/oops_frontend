@@ -20,11 +20,11 @@ export default function Cart() {
     const [products, setProducts] = useState([])
     const [itemQuantities, setitemQuantities] = useState([])
     const [total, setTotal] = useState(0);
-    const [cart,setCart] = useState([]);
+    const [cart, setCart] = useState([]);
     const [searchInput, setSearch] = useState("");
 
 
-    
+
 
     const params = useParams();
     const [searchvalue, setSearchValue] = useState(params.query);
@@ -59,17 +59,17 @@ export default function Cart() {
     }
     useEffect(() => {
         getCategs();
-        
+
     }, [searchvalue]);
 
 
-    
+
 
 
 
     const getCartItems = async () => {
         var cartItemEndpointuid = cartItemEndpoint + localStorage.getItem('uid');
-       
+
         const response = await fetch(cartItemEndpointuid);
         const myJson = await response.json();
         setCart(myJson);
@@ -80,7 +80,7 @@ export default function Cart() {
         myJson.forEach(async (element) => {
             const response2 = await fetch(prodEndPoint + "/pid=" + element.pid);
             const myJson2 = await response2.json();
-            subtotal += myJson2.price*element.quantity;
+            subtotal += myJson2.price * element.quantity;
 
             produ.push(myJson2);
             quantities.push(element.quantity);
@@ -98,21 +98,21 @@ export default function Cart() {
 
     useEffect(() => {
         getCartItems()
-        
+
     }, []);
 
 
-    const handleDelete = (pid)=>{
-        
-        var itemId = cart.filter(function(item){
-            return item.pid == pid;         
+    const handleDelete = (pid) => {
+
+        var itemId = cart.filter(function (item) {
+            return item.pid == pid;
         })
         console.log(itemId[0].id);
 
         var data = JSON.stringify({
             "id": itemId[0].id
         });
-    
+
         var config = {
             method: 'delete',
             url: 'http://localhost:8080/oops/api/cartItem/delete',
@@ -121,7 +121,7 @@ export default function Cart() {
             },
             data: data
         };
-    
+
         axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
@@ -136,14 +136,19 @@ export default function Cart() {
     return (
         <div className="Cart">
             <PrimarySearchAppBar
-            searchvalue={searchInput}
-                    searchfunction={handleSearchInput}
-                    searchbuttonfunction={handleSearchButtonClick}/>
+                searchvalue={searchInput}
+                searchfunction={handleSearchInput}
+                searchbuttonfunction={handleSearchButtonClick} />
             {products.length === 0 ?
-                (<h1>No Items in Your Cart!</h1>) :
+                (
+                    <div className="emptycart"><Stack spacing={3} sx={{alignItems:"center"}}>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwyhdlvbKjjCLdx8C8lCa0ltBEi8jLIUyxFQ&usqp=CAU" className="emptycartimg" />
+                        <h1>No Items in Your Cart!</h1>
+                        <Button variant="outline-success" onClick={() => { navigate("/") }} className="emptycartbutton">Back To Home</Button>
+                    </Stack></div>) :
                 (<div className="cart">
                     <Card className="checkoutcard">
-                        <Stack direction='row' sx={{justifyContent:"space-between"}}>
+                        <Stack direction='row' sx={{ justifyContent: "space-between" }}>
                             <p><b>Subtotal: ₹{total}</b></p>
                             <Button onClick={goToCheckout} className="checkoutbutton">Checkout</Button>
                         </Stack>
@@ -172,15 +177,15 @@ export default function Cart() {
                                     price={product.price}
                                     name={product.name}
                                     quantity={itemQuantities[index]}
-                                    isDeletable = {true}
-                                    handledelete = {()=>{
-                                        
+                                    isDeletable={true}
+                                    handledelete={() => {
+
 
                                         handleDelete(product.id);
                                         console.log(product.id);
-                                        
-                                        }}
-                                    
+
+                                    }}
+
 
                                 />
 
@@ -189,7 +194,7 @@ export default function Cart() {
                             )
                         })}
                     </Stack>
-                    </div>
+                </div>
                 )}
         </div>
     )

@@ -2,11 +2,6 @@
     margin:4% 15%;
 }
 
-h5{
-    text-align:center;
-    width:1.5rem;
-}
-
 h6{
     margin-right:10%;
     
@@ -27,8 +22,24 @@ p{
 }
 
 .checkoutbutton, .checkoutbutton:hover, .checkoutbutton:active, .checkoutbutton:visited {
-    background-color: #e03444 !important;
+    background-color: #82CD47 !important;
+    color: #252A34;
     border-width:0px !important;
-    margin-bottom:10%;
+    margin-bottom:9%;
     width:12rem;
+}
+
+.emptycartimg{
+    width:10rem;
+    height:10rem;
+}
+
+.emptycart{
+    margin:auto;
+    padding: 10% 30%
+    
+}
+.emptycartbutton{
+    width:10rem;
+   
 }
