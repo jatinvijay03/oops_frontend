@@ -21,6 +21,7 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
+
 function NavScrollExample(props) {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -99,7 +100,16 @@ function NavScrollExample(props) {
       <Container fluid>
       <Stack className='appbar' direction="row" spacing={10}>
         <button className="btn bg-transparent" variant='text' onClick={backToHome}>
-          <Navbar.Brand className='Brand'>AGGARWALS</Navbar.Brand></button>
+          <Navbar.Brand className='Brand'>
+          <img
+              alt=""
+              src='../../images/logo.png'
+              width="30"
+              height="30"
+              className="d-inline-block align-top"
+            />
+            {' '}
+            AGGARWALS</Navbar.Brand></button>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
 
