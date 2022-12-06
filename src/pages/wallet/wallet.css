@@ -1,14 +1,19 @@
 .wallet{
     
-    height:100vh
-    
+    height:100vh;
+    background-color: #82CD47;
 }
 
 .Card{
     margin: 10% auto;
     padding-bottom: 4%;
     width: 40rem;
-    
+    color: white;
+}
+
+.mt-6{
+    margin-bottom: 30% auto;
+    margin-top: 0;
 }
 
 .alert{
