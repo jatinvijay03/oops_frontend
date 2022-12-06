@@ -101,6 +101,7 @@ function NavScrollExample(props) {
             </Form>
             
               <IconButton
+                className='navb-icon'
                 size="large"
                 aria-label="shopping cart"
                 color="inherit"
@@ -112,6 +113,7 @@ function NavScrollExample(props) {
               </IconButton>
             
             <IconButton
+              className='navb-icon'
               size="large"
               edge="end"
               aria-label="account of current user"
