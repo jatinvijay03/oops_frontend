@@ -3,6 +3,13 @@
     
 }
 
+.SignUpPage{
+    height: 100vh;
+    padding-left: 22.5%;
+    background-color:#252A34;
+
+}
+
 .Signup h1{
     padding-bottom: 0%;
     margin-bottom: 0%;
@@ -10,6 +17,14 @@
 
 .Signup .Card{
     margin: 0px auto;
-    padding-bottom: 4%;
 }
 
+
+.inputnon{
+    opacity: 0;
+    position: absolute;
+}
+
+.error-text{
+    color: crimson;
+}
