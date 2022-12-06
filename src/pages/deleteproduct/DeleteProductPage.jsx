@@ -14,6 +14,7 @@ import SearchBar from "../../components/appbar/SearchBar";
 import { useNavigate, useParams } from "react-router-dom";
 import "./deleteProductPage.css";
 import CartItem from "../../components/cartitem/CartItem";
+import axios from "axios";
 
 export default function DeleteProductPage() {
 
@@ -66,6 +67,31 @@ export default function DeleteProductPage() {
     }
     useEffect(() => { getOrders(); }, []);
 
+    const handleDelete = (id)=>{
+        var data = JSON.stringify({
+            "id": id
+          });
+          
+          var config = {
+            method: 'delete',
+            url: 'http://localhost:8080/oops/api/product/delete',
+            headers: { 
+              'Content-type': 'application/json'
+            },
+            data : data
+          };
+          
+          axios(config)
+          .then(function (response) {
+            console.log(JSON.stringify(response.data));
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
+        window.location.reload();
+    }
+
 
     return (
         <div>
@@ -101,6 +127,9 @@ export default function DeleteProductPage() {
                                                     name={product.name}
                                                     isDeletable={true}
                                                     isOrder ={false}
+                                                    handledelete = {()=>{
+                                                        handleDelete(product.id);
+                                                    }}
                                                 />
                                             </MDBCardBody>
                                         </MDBCard>)

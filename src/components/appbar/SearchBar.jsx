@@ -94,7 +94,7 @@ function NavScrollExample(props) {
 
       {(localStorage.getItem('role') == 'admin')?<MenuItem onClick={()=>{navigate('/adminOrders')}}>All Orders</MenuItem>:<></>}
       {(localStorage.getItem('role') == 'admin')?<MenuItem onClick={()=>{navigate('/applications')}}>Manager Applications</MenuItem>:<></>}
-
+      {(localStorage.getItem('role') == 'admin')?<MenuItem onClick={()=>{navigate('/productsDelete')}}>Delete Products</MenuItem>:<></>}
 
       <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
     </Menu>
