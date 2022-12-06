@@ -51,6 +51,16 @@ function NavScrollExample(props) {
     navigate('/wallet');
   };
 
+  const handleAddProduct = () => {
+    
+    navigate('/addproduct');
+  };
+
+  const handleAddCategory = () => {
+    
+    navigate('/addcategory');
+  };
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -71,6 +81,8 @@ function NavScrollExample(props) {
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleSignOut}>SignOut</MenuItem>
       <MenuItem onClick={handleWallet}>Your Wallet</MenuItem>
+      {(localStorage.getItem('role') == 'manager' || localStorage.getItem('role') == 'admin')?<MenuItem onClick={handleAddProduct}>Add Products</MenuItem>:<></>}
+      {(localStorage.getItem('role') == 'manager' || localStorage.getItem('role') == 'admin')?<MenuItem onClick={handleAddCategory}>Add Categories</MenuItem>:<></>}
     </Menu>
   );
 

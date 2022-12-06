@@ -110,7 +110,7 @@ export default function Signup() {
             seterrorn(true);
             seterrorm("Passwords don't match");
         }
-        
+
         else{ 
                 var data = JSON.stringify({
                     "email": email,
@@ -136,6 +136,7 @@ export default function Signup() {
                             console.log(response.data);
                             localStorage.setItem('uid', response.data.id);
                             localStorage.setItem('email', response.data.email);
+                            localStorage.setItem('role', response.data.role);
                             var data1 = JSON.stringify({
                                 "uid": response.data.id,
                                 "amount": 1000,
