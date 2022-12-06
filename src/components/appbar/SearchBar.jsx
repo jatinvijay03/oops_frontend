@@ -84,6 +84,9 @@ function NavScrollExample(props) {
       
       {(localStorage.getItem('role') == 'manager' || localStorage.getItem('role') == 'admin')?<MenuItem onClick={handleAddProduct}>Add Products</MenuItem>:<></>}
       {(localStorage.getItem('role') == 'manager' || localStorage.getItem('role') == 'admin')?<MenuItem onClick={handleAddCategory}>Add Categories</MenuItem>:<></>}
+      {(localStorage.getItem('role') == 'admin')?<MenuItem onClick={()=>{navigate('/adminOrders')}}>All Orders</MenuItem>:<></>}
+      {(localStorage.getItem('role') == 'admin')?<MenuItem onClick={()=>{navigate('/applications')}}>Manager Applications</MenuItem>:<></>}
+
       <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
     </Menu>
   );

@@ -1,0 +1,21 @@
+.managerslist{
+    background-color:#252A34 !important;
+    color:white !important;
+    height:6rem;
+    padding-top:1.5% ;
+}
+
+.managerbutton{
+    background-color: #82CD47 !important;
+    color: white;
+}
+.managercard{
+    margin:0% auto;
+    width:40rem;
+}
+
+.managerpage{
+    background-color: #82CD47;
+    color: white !important;
+    height:100vh;
+}

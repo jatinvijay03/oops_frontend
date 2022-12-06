@@ -281,12 +281,13 @@ export default function Profile() {
                                 <Button onClick={handleDeleteAccount} variant="contained" color="error" style={{ width: "12rem", marginLeft: "80%" }}>Delete</Button>
                             </dd>
                         </div>
-                        <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        {(localStorage.getItem('role') == 'customer')?(<div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt className="text-sm font-medium text-gray-500">Apply for manager</dt>
                             <dd className="text-sm font-medium text-gray-500">
                                 <Button className="profilepagebutton" variant="contained" color="success">Apply</Button>
                             </dd>
-                        </div>
+                        </div>):(<></>)}
+                        
                     </dl>
                 </div>
             </div>
