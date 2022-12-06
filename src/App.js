@@ -23,6 +23,8 @@ function App() {
         <Route path='cart' element={<Cart/>}/>
         <Route path='checkout' element={<Checkout/>}/>
         <Route path='wallet' element={<Wallet/>}/>
+        <Route path='addproduct' element={<AddProduct/>}/>
+        <Route path='addcategory' element={<AddCategory/>}/>
         <Route path='profile' element={<Profile/>}/>
       </Routes> 
     </div>

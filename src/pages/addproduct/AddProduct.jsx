@@ -1,12 +1,14 @@
 import { useState,useEffect } from 'react';
 
-import Button from "@mui/material/Button";
+import Button from 'react-bootstrap/Button';
 import { Card } from "@mui/material";
 import { Stack } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
+import { useNavigate, useParams } from 'react-router-dom';
+import SearchBar from '../../components/appbar/SearchBar'
 
 import LabelText from "../../components/labeltext/LabelText"
 import './addproduct.css';
@@ -27,6 +29,45 @@ function AddProduct() {
     const [img, setImg] = useState("");
     const [categId, setCategId] = useState("");
     const [categories, setCategories] = useState([]);
+    const [searchInput, setSearch] = useState("");
+    const [products, setProducts] = useState([]);
+
+    const params = useParams();
+    const [searchvalue, setSearchValue] = useState(params.query);
+
+    const handleSearchInput = (event) => {
+        setSearch(event.target.value);
+
+    }
+
+    const handleSearchButtonClick = (event) => {
+        setSearchValue(searchInput)
+
+        navigate('/products/' + (searchInput));
+    }
+
+    const getCategs = async () => {
+
+        if (searchvalue.includes("category=")) {
+            var a = searchvalue.indexOf("=");
+            const response = await fetch(productEndPoint + "/category=" + searchvalue.substring(a + 1));
+            const myJson = await response.json();
+            setProducts(myJson)
+        }
+        else {
+            const response = await fetch(productEndPoint + "/q=" + searchvalue);
+            const myJson = await response.json();
+            // const response2 = await fetch(categEndPoint);
+            // const myJson2 = await response2.json(); //extract JSON from the http response
+            setProducts(myJson)
+        }
+    }
+    useEffect(() => {
+        getCategs();
+
+    }, [searchvalue]);
+
+    const navigate = useNavigate();
 
     // const [, handle] = useState("");
     // const [, handle] = useState("");
@@ -75,7 +116,7 @@ function AddProduct() {
    }
 
 
-    const getCategs = async () => {
+    const getCateg = async () => {
         
         const response = await fetch(categEndPoint);
         const myJson = await response.json(); //extract JSON from the http response
@@ -86,11 +127,16 @@ function AddProduct() {
         }
     
     useEffect(()=>{
-        getCategs();
+        getCateg();
     },[]);
 
     return (
-        <div >
+        <div className='addProPage'>
+             <SearchBar
+            searchvalue={searchInput}
+            searchfunction={handleSearchInput}
+            searchbuttonfunction={handleSearchButtonClick}
+        />
             <Card className='AddProduct'
                 variant="outlined"
 
@@ -99,7 +145,7 @@ function AddProduct() {
                 <Stack spacing={2} className="Stack">
 
                     <FormControl>
-                        <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                        <InputLabel className='catlab' id="demo-simple-select-label">Category</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
@@ -125,6 +171,7 @@ function AddProduct() {
                         labelName="Product: "
                     />
                     <LabelText
+                       
                         width={WIDTH}
                         variable={price}
                         function={handlePrice}
@@ -132,30 +179,30 @@ function AddProduct() {
                         defaultValue = ""
                     />
                     <LabelText
+                        
                         width={WIDTH}
                         variable={description}
                         function={handleDescription}
                         labelName="Description: "
                     />
                     <LabelText
+                        
                         width={WIDTH}
                         variable={img}
                         function={handleImg}
                         labelName="Image URL: "
                     />
-                    <Button
+                    {/* <Button
                         variant="contained"
-                        sx={{
-                            width: 200,
-                            alignSelf: 'center'
-
-                        }}
+                        
                         onClick = {handleClick}
                         className=""
 
                     >
                         Add Product
-                    </Button>
+                    </Button> */}
+
+                    <Button variant="custom" onClick={handleClick}>Add Product</Button>{' '}
                 </Stack>
 
 

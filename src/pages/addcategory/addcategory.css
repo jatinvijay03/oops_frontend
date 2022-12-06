@@ -1,5 +1,6 @@
 .AddCategory{
-    margin: 15em auto;
+    height:100vh;
+    background-color: #82CD47;
 }
 
 .Stack{
@@ -8,4 +9,14 @@
 
 .button{
     padding-top: 10%;
+}
+
+.btn-custom{
+    border-color: #82CD47 ;
+    color: #82CD47 ;
+}
+
+.btn-custom:hover{
+    background-color: #82CD47 ;
+    color: #82CD47 ;
 }
