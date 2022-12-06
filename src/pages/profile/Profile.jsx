@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button, Stack } from "@mui/material";
 import { Modal } from "react-bootstrap";
 import { Form } from "react-bootstrap";
+import axios from 'axios';
 
 import "./profile.css";
 
@@ -21,15 +22,73 @@ export default function Profile() {
     const [currentpassword, setCurrentPassword] = useState("")
     const [newpassword, setnewPassword] = useState("")
     const [confirm, setConfirm] = useState("")
+    const [isError, setisError] = useState(false)
+    const [errorm, setErrorm] = useState("Couldn't change password")
 
 
 
 
     const handleClose = () => {
-        console.log(currentpassword);
-        console.log(newpassword);
-        console.log(confirm);
+        setCurrentPassword("");
+        setnewPassword("");
+        setConfirm("");
         setShow(false)
+        setisError(false)
+    };
+    const handleSave = () => {
+        if(newpassword == confirm){
+            var data = JSON.stringify({
+                "uid": localStorage.getItem('uid'),
+                "password": currentpassword,
+                "newpass": newpassword
+            });
+            
+            var config = {
+                method: 'post',
+                url: 'http://localhost:8080/oops/api/user/changePass',
+                headers: { 
+                'Content-type': 'application/json'
+                },
+                data : data
+            };
+            
+            axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+                var data = JSON.stringify({
+                    "recipient": localStorage.getItem('email'),
+                    "msgBody": "Hi, your password has been updated, if this was not you, please reach out to us!",
+                    "subject": "Aggarwal's Online Supermarket Password Update"
+                  });
+                  
+                  var config = {
+                    method: 'post',
+                    url: 'http://localhost:8080/oops/api/sendEmail',
+                    headers: { 
+                      'Content-type': 'application/json'
+                    },
+                    data : data
+                  };
+                  
+                  axios(config)
+                  .then(function (response) {
+                    console.log(JSON.stringify(response.data));
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
+                window.location.reload();
+            })
+            .catch(function (error) {
+                console.log(error);
+                setisError(true);
+            });
+        }
+        else{
+            setErrorm("Confirm password doesn't match");
+            setisError(true);
+        }
+        
     };
     const handleShow = () => setShow(true);
 
@@ -44,6 +103,52 @@ export default function Profile() {
         const myJson = await response.json();
         setUser(myJson);
 
+    }
+
+    const handleDeleteAccount = () => {
+        var data = JSON.stringify({
+            "id": localStorage.getItem('uid')
+          });
+          
+          var config = {
+            method: 'delete',
+            url: 'http://localhost:8080/oops/api/user/delete',
+            headers: { 
+              'Content-type': 'application/json'
+            },
+            data : data
+          };
+          
+          axios(config)
+          .then(function (response) {
+            console.log(JSON.stringify(response.data));
+            var data = JSON.stringify({
+                "uid": localStorage.getItem('uid')
+              });
+              
+              var config = {
+                method: 'delete',
+                url: 'http://localhost:8080/oops/api/wallet/delete',
+                headers: { 
+                  'Content-type': 'application/json'
+                },
+                data : data
+              };
+              
+              axios(config)
+              .then(function (response) {
+                console.log(JSON.stringify(response.data));
+                navigate('/login');
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+          
     }
 
     useEffect(() => { getUser() }, []);
@@ -79,6 +184,7 @@ export default function Profile() {
     }
     const handleNew = (event) => {
         setnewPassword(event.target.value);
+        
     }
     const handleConfirm = (event) => {
         setConfirm(event.target.value);
@@ -125,14 +231,14 @@ export default function Profile() {
                             value={confirm}
                             onChange={handleConfirm}
                         />
-
+                        {isError?<h2 className="error-msg">{errorm}</h2>:<></>}
                     </Stack>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button variant="primary" onClick={handleSave}>
                         Save Changes
                     </Button>
                 </Modal.Footer>
@@ -170,10 +276,10 @@ export default function Profile() {
                         <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt className="text-sm font-medium text-gray-500">Delete Account</dt>
                             <dd className="text-sm font-medium text-gray-500">
-                                <Button variant="contained" color="error" style={{ width: "12rem", marginLeft: "80%" }}>Delete</Button>
+                                <Button onClick={handleDeleteAccount} variant="contained" color="error" style={{ width: "12rem", marginLeft: "80%" }}>Delete</Button>
                             </dd>
                         </div>
-                        <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt className="text-sm font-medium text-gray-500">Apply for manager</dt>
                             <dd className="text-sm font-medium text-gray-500">
                                 <Button className="profilepagebutton" variant="contained" color="success">Apply</Button>

@@ -4,3 +4,7 @@
     background-color: #82CD47 !important;
     color: #252A34 !important;
 }
+
+.error-msg{
+    color: red;
+}
