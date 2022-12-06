@@ -1,14 +1,34 @@
-.Login{
-    margin-top: 10em;
+.checkoutform{
+    border-width:0px 0.1rem 0px 0px;
+    padding-right:10%;
+}
+
+.checkoutpagecard{
+    margin-top: 10%;
+    height: 14rem;
+    text-align:left;
+    padding:10%;
+    background-color:#252A34 !important;
+    color:white !important;
+}
+
+.checkoutgrid{
+    padding:0% 10%
+}
+
+.checkoutpagebutton{
+    width:15rem !important;
+    margin-top:15% !important;
+    background-color: #82CD47 !important;
+    color: #252A34;
+
+}
+
+.checkoutheading{
+    font-size: 2em;
+    margin-bottom:5%;
+}
+
+.checkout{
     
-}
-
-.Login h1{
-    padding-bottom: 0%;
-    margin-bottom: 0%;
-}
-
-.Login .Card{
-    margin: 0px auto;
-    padding-bottom: 4%;
 }

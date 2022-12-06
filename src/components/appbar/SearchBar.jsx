@@ -68,7 +68,7 @@ function NavScrollExample(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={()=>{navigate('/profile')}}>Profile</MenuItem>
       <MenuItem onClick={handleSignOut}>SignOut</MenuItem>
       <MenuItem onClick={handleWallet}>Your Wallet</MenuItem>
     </Menu>

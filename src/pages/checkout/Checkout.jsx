@@ -9,6 +9,10 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { data } from 'autoprefixer';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CartItem from '../../components/cartitem/CartItem';
+import BrandBar from '../../components/appbar/BrandBar';
+import { Alert } from 'react-bootstrap';
+import CancelIcon from '@mui/icons-material/CheckCircle';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 
 function Checkout() {
@@ -163,7 +167,7 @@ function Checkout() {
         today = yyyy + '-' + mm + '-' + dd;
         if (isEnough) {
             console.log(products);
-            if(wallet.amount > total){
+            if (wallet.amount > total) {
                 var mBody = "Thanks for shopping with Aggarwal's Online Supermarket, \nYour order details are as follows, \nDelivery Address: "
                 mBody = mBody + address + "\n"
                 var dataAll = "[";
@@ -210,25 +214,25 @@ function Checkout() {
                                     "recipient": localStorage.getItem('email'),
                                     "msgBody": mBody,
                                     "subject": "Aggarwal's Online Super Market Order Placed"
-                                  });
-                                  
-                                  var config = {
+                                });
+
+                                var config = {
                                     method: 'post',
                                     url: 'http://localhost:8080/oops/api/sendEmail',
-                                    headers: { 
-                                      'Content-type': 'application/json'
+                                    headers: {
+                                        'Content-type': 'application/json'
                                     },
-                                    data : data
-                                  };
-                                  
-                                  axios(config)
-                                  .then(function (response) {
-                                    console.log(JSON.stringify(response.data));
-                                  })
-                                  .catch(function (error) {
-                                    console.log(error);
-                                  });
-                                  
+                                    data: data
+                                };
+
+                                axios(config)
+                                    .then(function (response) {
+                                        console.log(JSON.stringify(response.data));
+                                    })
+                                    .catch(function (error) {
+                                        console.log(error);
+                                    });
+
                             }
                             else {
                                 setIsEnough(false);
@@ -240,78 +244,98 @@ function Checkout() {
                     });
 
                 setCheckedOut(true);
-                setTimeout(() => { navigate('/') }, 5000)
+                setTimeout(() => { navigate('/') }, 3000)
             }
             else {
                 setIsEnough(false);
             }
         }
+        else {
+            setTimeout(() => setIsEnough(true), 2000)
+        }
 
     }
 
-    return checkedout ? (<h1>Thank you for placing your order</h1>) : (<div className="checkout">
-        <Grid container columnSpacing={10}>
-            <Grid item xs={8}>
-                <Stack spacing={5} className="stack">
+    return checkedout ? (
+        <div style={{height:"100vh"}}>
+        <Stack spacing={2} sx={{alignContent:"center"}} style={{paddingTop:"10%"}}>
+            <h1 style={{fontSize:"3rem"}}>Your order has been recieved</h1>
+            <CheckCircleIcon style={{fontSize:"5rem",color:"#82CD47",margin:"2% auto"}}/>
+            <h1 style={{fontSize:"2rem"}}>Thank you for your purchase</h1>
+            <p>Redirecting you to home screen</p>
+            </Stack>
+        </div>
+    )
+        :
+        (<div className="checkout">
+            <BrandBar />
+            <h1 className='checkoutheading'>Checkout</h1>
+            <Grid container columnSpacing={10} className="checkoutgrid">
+                <Grid item xs={8} className="checkoutform">
+                    <Stack spacing={5} className="stack">
 
-                    <TextField
-                        label="Address"
-                        defaultValue={address}
-                        variant="outlined"
-                        sx={{ width: 300, alignSelf: 'center' }}
-                        value={address}
-                        onChange={handleAddress}
-                    />
-                    <hr></hr>
-                    <h3>Your Items</h3>
-
-                    {products.map((product, index) => {
-                        return (<Stack divider={<></>}>  <CartItem
-                            key={index}
-                            image={product.image}
-                            description={product.description}
-                            price={product.price}
-                            name={product.name}
-                            quantity={itemQuantities[index]}
-                            isDeletable={false}
-                            handledelete={() => {
-
-
-                                handleDelete(product.id);
-                                console.log(product.id);
-
-                            }}
+                        <TextField
+                            label="Address"
+                            defaultValue={address}
+                            variant="outlined"
+                            sx={{ width: 600, alignSelf: 'center' }}
+                            value={address}
+                            onChange={handleAddress}
+                        />
+                        <hr></hr>
 
 
-                        /></Stack>)
-                    })}
-                </Stack>
-                {isEnough ? <h2></h2> : <h2>Funds not Sufficient, click to add money to your wallet</h2>}
-            </Grid>
+                        {products.map((product, index) => {
+                            return (<Stack divider={<></>}>  <CartItem
+                                className="checkoutcartitem"
+                                key={index}
+                                image={product.image}
+                                description={product.description}
+                                price={product.price}
+                                name={product.name}
+                                quantity={itemQuantities[index]}
+                                isDeletable={false}
+                                handledelete={() => {
 
-            <Grid item xs={4}>
-                <Card sx={{ alignItems: "center" }}>
-                    <Stack>
-                        <p>Subtotal: ₹{total}</p>
-                        <Stack direction="row" spacing={4}><p>Wallet Balance: ₹{wallet.amount}</p><AddCircleIcon onClick={()=>{navigate('/wallet')}} /></Stack>
-                        <Button
-                            variant="contained"
-                            sx={{
-                                width: 100,
-                                alignSelf: 'center'
 
-                            }}
-                            onClick={handlePressed}
+                                    handleDelete(product.id);
 
-                        >
-                            Place order
-                        </Button>
 
+                                }}
+
+
+                            /></Stack>)
+                        })}
                     </Stack>
-                </Card>
+                </Grid>
+
+                <Grid item xs={4}>
+                    <Card className="checkoutpagecard">
+                        <Stack spacing={1}>
+                            <p>Subtotal: ₹{total}</p>
+                            <Stack direction="row" spacing={4}><p>Wallet Balance: ₹{wallet.amount}</p><AddCircleIcon onClick={() => { navigate('/wallet') }} /></Stack>
+                            <Button
+                                className='checkoutpagebutton'
+                                variant="contained"
+                                sx={{
+                                    width: 100,
+                                    alignSelf: 'center'
+
+                                }}
+                                onClick={handlePressed}
+
+                            >
+                                Place order
+                            </Button>
+
+                        </Stack>
+                    </Card>
+                </Grid>
             </Grid>
-        </Grid>
-    </div>);
+            {!isEnough ? (<Alert className="alert error" variant="danger" onClose={() => setIsEnough(true)}>
+                <p><CancelIcon />&nbsp;&nbsp;Not enough money in wallet</p>
+            </Alert>) : (<></>)}
+        </div>);
 
 }
 
