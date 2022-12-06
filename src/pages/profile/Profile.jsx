@@ -2,9 +2,10 @@ import SearchBar from "../../components/appbar/SearchBar"
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Stack } from "@mui/material";
-import { Modal } from "react-bootstrap";
+import { Modal, Alert } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import axios from 'axios';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 import "./profile.css";
 
@@ -22,7 +23,7 @@ export default function Profile() {
     const [currentpassword, setCurrentPassword] = useState("")
     const [newpassword, setnewPassword] = useState("")
     const [confirm, setConfirm] = useState("")
-
+    const [showAlert, setShowAlert] = useState(false);
     const [isError, setisError] = useState(false)
     const [errorm, setErrorm] = useState("Couldn't change password")
 
@@ -105,6 +106,33 @@ export default function Profile() {
         const myJson = await response.json();
         setUser(myJson);
 
+    }
+
+    const handleApplyforManager = () => {
+        var data = JSON.stringify({
+            "email": user.email,
+            "name": user.name,
+            "uid": localStorage.getItem('uid')
+          });
+          
+          var config = {
+            method: 'post',
+            url: 'http://localhost:8080/oops/api/requestm',
+            headers: { 
+              'Content-type': 'application/json'
+            },
+            data : data
+          };
+          
+          axios(config)
+          .then(function (response) {
+            console.log(JSON.stringify(response.data));
+            setShowAlert(true);
+            setTimeout(() => setShowAlert(false), 2000)
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     }
 
     const handleDeleteAccount = () => {
@@ -284,13 +312,16 @@ export default function Profile() {
                         {(localStorage.getItem('role') == 'customer')?(<div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt className="text-sm font-medium text-gray-500">Apply for manager</dt>
                             <dd className="text-sm font-medium text-gray-500">
-                                <Button className="profilepagebutton" variant="contained" color="success">Apply</Button>
+                                <Button onClick={handleApplyforManager} className="profilepagebutton" variant="contained" color="success">Apply</Button>
                             </dd>
                         </div>):(<></>)}
                         
                     </dl>
                 </div>
             </div>
+            {showAlert? (<Alert className="alert" variant="success" onClose={() => setShow(false)}>
+                <p><CheckCircleIcon />&nbsp;&nbsp;Request to be Manager Sent!</p>
+            </Alert>) : (<></>)}
         </div>
     )
 }
