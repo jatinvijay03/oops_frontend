@@ -130,6 +130,7 @@ export default function Login() {
                 setLogin(true);
                 localStorage.setItem('uid', response.data.id);
                 localStorage.setItem('email', response.data.email);
+                localStorage.setItem('role', response.data.role);
                 navigate('/')
             }
         })

@@ -1,6 +1,7 @@
 import TextField from '@mui/material/TextField';
 import { Stack } from '@mui/material';
 import Box from '@mui/material/Box';
+import './labeltext.css';
 
 function LabelText(props) {
     return (
@@ -8,11 +9,12 @@ function LabelText(props) {
             direction="row"
             spacing={2}
             justifyContent="space-between">
-            <h3>{props.labelName}</h3>
+            <h3 className='label-tex'>{props.labelName}</h3>
             <Box display="flex" justifyContent="flex-end">
                 <TextField
+                    className='lable-tex'
                     variant="outlined"
-                    sx={{ width: props.width, alignSelf: 'flex-end' }}
+                    sx={{ input: { color: 'white' },width: props.width, alignSelf: 'flex-end' }}
                     autoComplete='off'
                     value={props.variable}
                     onChange={props.function}

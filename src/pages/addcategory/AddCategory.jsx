@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 
-import Button from "@mui/material/Button";
+import Button from 'react-bootstrap/Button';
 import { Card } from "@mui/material";
 import { Stack } from '@mui/material';
+import { useNavigate, useParams } from 'react-router-dom';
+import SearchBar from '../../components/appbar/SearchBar'
 
 import LabelText from "../../components/labeltext/LabelText";
 
@@ -18,6 +20,45 @@ function AddCategory() {
 
     const [category, setCategory] = useState("");
     const [img, setImg] = useState("");
+    const [searchInput, setSearch] = useState("");
+    const [products, setProducts] = useState([]);
+
+    const params = useParams();
+    const [searchvalue, setSearchValue] = useState(params.query);
+
+    const handleSearchInput = (event) => {
+        setSearch(event.target.value);
+
+    }
+
+    const handleSearchButtonClick = (event) => {
+        setSearchValue(searchInput)
+
+        navigate('/products/' + (searchInput));
+    }
+
+    const getCategs = async () => {
+
+        if (searchvalue.includes("category=")) {
+            var a = searchvalue.indexOf("=");
+            const response = await fetch(productEndPoint + "/category=" + searchvalue.substring(a + 1));
+            const myJson = await response.json();
+            setProducts(myJson)
+        }
+        else {
+            const response = await fetch(productEndPoint + "/q=" + searchvalue);
+            const myJson = await response.json();
+            // const response2 = await fetch(categEndPoint);
+            // const myJson2 = await response2.json(); //extract JSON from the http response
+            setProducts(myJson)
+        }
+    }
+    useEffect(() => {
+        getCategs();
+
+    }, [searchvalue]);
+
+    const navigate = useNavigate();
 
     const handleCategory = (event) => {
         setCategory(event.target.value);
@@ -55,6 +96,11 @@ function AddCategory() {
 
     return (
         <div className='AddCategory'>
+            <SearchBar
+            searchvalue={searchInput}
+            searchfunction={handleSearchInput}
+            searchbuttonfunction={handleSearchButtonClick}
+        />
             <Card className='AddProduct'
                 variant="outlined"
 
@@ -73,19 +119,8 @@ function AddCategory() {
                         function={handleImg}
                         labelName="Image URL: "
                     />
-                    <Button
-                        variant="contained"
-                        sx={{
-                            width: 200,
-                            alignSelf: 'center'
-
-                        }}
-                        onClick={handleClick}
-                        
-
-                    >
-                        Add Category
-                    </Button>
+                    
+                    <Button variant="custom" onClick={handleClick}>Add Category</Button>{' '}
                 </Stack>
             </Card>
         </div>
