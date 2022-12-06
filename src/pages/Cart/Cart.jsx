@@ -178,6 +178,7 @@ export default function Cart() {
                                     name={product.name}
                                     quantity={itemQuantities[index]}
                                     isDeletable={true}
+                                    isOrder ={false}
                                     handledelete={() => {
 
 

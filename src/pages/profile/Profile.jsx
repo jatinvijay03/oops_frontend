@@ -22,8 +22,10 @@ export default function Profile() {
     const [currentpassword, setCurrentPassword] = useState("")
     const [newpassword, setnewPassword] = useState("")
     const [confirm, setConfirm] = useState("")
+
     const [isError, setisError] = useState(false)
     const [errorm, setErrorm] = useState("Couldn't change password")
+
 
 
 
