@@ -81,6 +81,8 @@ function NavScrollExample(props) {
       <MenuItem onClick={()=>{navigate('/profile')}}>Profile</MenuItem>
       <MenuItem onClick={handleSignOut}>SignOut</MenuItem>
       <MenuItem onClick={handleWallet}>Your Wallet</MenuItem>
+      <MenuItem onClick={()=>{navigate('/orders')}}>Your Orders</MenuItem>
+      
       {(localStorage.getItem('role') == 'manager' || localStorage.getItem('role') == 'admin')?<MenuItem onClick={handleAddProduct}>Add Products</MenuItem>:<></>}
       {(localStorage.getItem('role') == 'manager' || localStorage.getItem('role') == 'admin')?<MenuItem onClick={handleAddCategory}>Add Categories</MenuItem>:<></>}
     </Menu>

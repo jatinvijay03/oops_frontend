@@ -21,6 +21,7 @@ export default function Profile() {
     const [currentpassword, setCurrentPassword] = useState("")
     const [newpassword, setnewPassword] = useState("")
     const [confirm, setConfirm] = useState("")
+    
 
 
 

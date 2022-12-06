@@ -10,6 +10,7 @@ import Cart from './pages/Cart/Cart';
 import Checkout from './pages/checkout/Checkout';
 import Wallet from './pages/wallet/Wallet';
 import Profile from './pages/profile/Profile';
+import OrderPage from './pages/orderpage/OrderPage';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path='addproduct' element={<AddProduct/>}/>
         <Route path='addcategory' element={<AddCategory/>}/>
         <Route path='profile' element={<Profile/>}/>
+        <Route path='orders' element={<OrderPage/>}/>
       </Routes> 
     </div>
   );

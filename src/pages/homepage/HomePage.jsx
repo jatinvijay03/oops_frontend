@@ -23,6 +23,7 @@ function HomePage() {
 
     const [categories, setCategories] = useState([]);
     const [searchInput, setSearch] = useState("");
+    
 
     const getCategs = async () => {
 
