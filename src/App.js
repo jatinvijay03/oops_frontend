@@ -11,6 +11,7 @@ import Checkout from './pages/checkout/Checkout';
 import Wallet from './pages/wallet/Wallet';
 import Profile from './pages/profile/Profile';
 import OrderPage from './pages/orderpage/OrderPage';
+import DeleteProductPage from './pages/deleteproduct/DeleteProductPage';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path='addcategory' element={<AddCategory/>}/>
         <Route path='profile' element={<Profile/>}/>
         <Route path='orders' element={<OrderPage/>}/>
+        <Route path='productsDelete' element={<DeleteProductPage/>}/>
       </Routes> 
     </div>
   );
