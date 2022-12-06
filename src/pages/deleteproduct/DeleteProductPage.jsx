@@ -141,9 +141,6 @@ export default function DeleteProductPage() {
                     </MDBRow>
                 </MDBContainer>
             </section>
-
-
-
         </div>
     )
 }

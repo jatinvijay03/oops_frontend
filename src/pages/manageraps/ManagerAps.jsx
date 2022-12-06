@@ -4,6 +4,7 @@ import SearchBar from "../../components/appbar/SearchBar";
 import { ListGroup, Badge, Card } from "react-bootstrap";
 import { Button } from "@mui/material";
 import './manageraps.css';
+import axios from 'axios';
 
 export default function ManagerAps() {
     const prodEndPoint = "http://localhost:8080/oops/api/product";
@@ -58,6 +59,74 @@ export default function ManagerAps() {
         navigate('/products/' + (searchInput));
     }
 
+    const handleApprove = (email, name, uid) => {
+        console.log(email, name, uid)
+        var data = JSON.stringify({
+            "id": uid
+          });
+          
+          var config = {
+            method: 'post',
+            url: 'http://localhost:8080/oops/api/user/setManager',
+            headers: { 
+              'Content-type': 'application/json'
+            },
+            data : data
+          };
+          
+          axios(config)
+          .then(function (response) {
+            console.log(JSON.stringify(response.data));
+            var data = JSON.stringify({
+                "uid": uid
+              });
+              var config = {
+                method: 'delete',
+                url: 'http://localhost:8080/oops/api/requestm/delete',
+                headers: { 
+                  'Content-type': 'application/json'
+                },
+                data : data
+              };
+              
+              axios(config)
+              .then(function (response) {
+                console.log(JSON.stringify(response.data));
+                var data = JSON.stringify({
+                    "recipient": email,
+                    "msgBody": "Congratulations! Your request to be manager has been approved. You now have access to Manager functions like adding and deleting products and categories.",
+                    "subject": "You are now a Manager at Aggarwal's Online Supermarket"
+                  });
+                  
+                  var config = {
+                    method: 'post',
+                    url: 'http://localhost:8080/oops/api/sendEmail',
+                    headers: { 
+                      'Content-type': 'application/json'
+                    },
+                    data : data
+                  };
+                  
+                  axios(config)
+                  .then(function (response) {
+                    console.log(JSON.stringify(response.data));
+                    window.location.reload();
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
+                  
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+          
+    }
+
 
 
     useEffect(() => {
@@ -88,7 +157,7 @@ export default function ManagerAps() {
                                     <div className="fw-bold">{manager.name}</div>
                                     {manager.email}
                                 </div>
-                                <Button variant="contained" className="managerbutton">
+                                <Button onClick={handleApprove(manager.email, manager.name, manager.uid)} variant="contained" className="managerbutton">
                                     Approve Manager
                                 </Button>
                             </ListGroup.Item>

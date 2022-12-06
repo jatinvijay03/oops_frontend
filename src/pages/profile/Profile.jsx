@@ -59,14 +59,13 @@ export default function Profile() {
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
                 var data = JSON.stringify({
-                    "recipient": localStorage.getItem('email'),
-                    "msgBody": "Hi, your password has been updated, if this was not you, please reach out to us!",
-                    "subject": "Aggarwal's Online Supermarket Password Update"
+                    "uid": localStorage.getItem('uid'),
+                    "pin": newpassword
                   });
                   
                   var config = {
                     method: 'post',
-                    url: 'http://localhost:8080/oops/api/sendEmail',
+                    url: 'http://localhost:8080/oops/api/wallet/update/password',
                     headers: { 
                       'Content-type': 'application/json'
                     },
@@ -75,12 +74,34 @@ export default function Profile() {
                   
                   axios(config)
                   .then(function (response) {
+                    var data = JSON.stringify({
+                        "recipient": localStorage.getItem('email'),
+                        "msgBody": "Hi, your password has been updated, if this was not you, please reach out to us!",
+                        "subject": "Aggarwal's Online Supermarket Password Update"
+                      });
+                      
+                      var config = {
+                        method: 'post',
+                        url: 'http://localhost:8080/oops/api/sendEmail',
+                        headers: { 
+                          'Content-type': 'application/json'
+                        },
+                        data : data
+                      };
+                      
+                      axios(config)
+                      .then(function (response) {
+                        window.location.reload();
+                        console.log(JSON.stringify(response.data));
+                      })
+                      .catch(function (error) {
+                        console.log(error);
+                      });
                     console.log(JSON.stringify(response.data));
                   })
                   .catch(function (error) {
                     console.log(error);
                   });
-                window.location.reload();
             })
             .catch(function (error) {
                 console.log(error);
