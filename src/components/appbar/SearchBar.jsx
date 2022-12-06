@@ -62,6 +62,11 @@ function NavScrollExample(props) {
     navigate('/addcategory');
   };
 
+  const handleAllProducts = () => {
+    
+    navigate('/allproducts');
+  };
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -82,11 +87,14 @@ function NavScrollExample(props) {
       <MenuItem onClick={()=>{navigate('/profile')}}>Profile</MenuItem>
       <MenuItem onClick={handleWallet}>Your Wallet</MenuItem>
       <MenuItem onClick={()=>{navigate('/orders')}}>Your Orders</MenuItem>
-      
       {(localStorage.getItem('role') == 'manager' || localStorage.getItem('role') == 'admin')?<MenuItem onClick={handleAddProduct}>Add Products</MenuItem>:<></>}
       {(localStorage.getItem('role') == 'manager' || localStorage.getItem('role') == 'admin')?<MenuItem onClick={handleAddCategory}>Add Categories</MenuItem>:<></>}
+
+      {(localStorage.getItem('role') == 'admin')?<MenuItem onClick={handleAllProducts}>All Products</MenuItem>:<></>}
+
       {(localStorage.getItem('role') == 'admin')?<MenuItem onClick={()=>{navigate('/adminOrders')}}>All Orders</MenuItem>:<></>}
       {(localStorage.getItem('role') == 'admin')?<MenuItem onClick={()=>{navigate('/applications')}}>Manager Applications</MenuItem>:<></>}
+
 
       <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
     </Menu>
