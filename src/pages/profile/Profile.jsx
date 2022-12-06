@@ -5,6 +5,8 @@ import { Button, Stack } from "@mui/material";
 import { Modal } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 
+import "./profile.css";
+
 
 
 
@@ -161,20 +163,20 @@ export default function Profile() {
                         <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" >
                             <dt className="text-sm font-medium text-gray-500">Reset Password</dt>
                             <dd className="text-sm font-medium text-gray-500" >
-                                <Button variant="contained" color="success" onClick={handleShow}>Reset</Button>
+                                <Button className="profilepagebutton" variant="contained" color="success" onClick={handleShow}>Reset</Button>
                             </dd>
 
                         </div>
                         <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt className="text-sm font-medium text-gray-500">Delete Account</dt>
                             <dd className="text-sm font-medium text-gray-500">
-                                <Button variant="contained" color="error">Delete</Button>
+                                <Button variant="contained" color="error" style={{ width: "12rem", marginLeft: "80%" }}>Delete</Button>
                             </dd>
                         </div>
                         <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt className="text-sm font-medium text-gray-500">Apply for manager</dt>
+                            <dt className="text-sm font-medium text-gray-500">Apply for manager</dt>
                             <dd className="text-sm font-medium text-gray-500">
-                                <Button variant="contained" color="success">Apply</Button>
+                                <Button className="profilepagebutton" variant="contained" color="success">Apply</Button>
                             </dd>
                         </div>
                     </dl>
