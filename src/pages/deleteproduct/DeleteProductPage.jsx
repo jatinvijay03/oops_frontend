@@ -128,6 +128,7 @@ export default function DeleteProductPage() {
                                                     name={product.name}
                                                     isDeletable={true}
                                                     isOrder ={false}
+                                                    allproducts ={true}
                                                     handledelete = {()=>{
                                                         handleDelete(product.id);
                                                     }}

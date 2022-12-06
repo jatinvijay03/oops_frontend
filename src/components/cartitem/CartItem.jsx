@@ -18,9 +18,9 @@ export default function CartItem(props) {
                 
                 {props.isOrder?(<h5 className="quantity">Qty:{props.quantity} </h5>):(<h5 className="quantity">{props.quantity} </h5>)}
                 
-                <Stack spacing={2}><h5 className="price">
+                <Stack spacing={2}>{props.allproducts?(<></>):(<h5 className="price">
                     Total: ₹{parseInt(props.price) * parseInt(props.quantity)}
-                </h5>
+                </h5>)}
                     {(props.isDeletable)?(<Button onClick={props.handledelete} variant="text">
                         <DeleteIcon className="delete" sx={{ alignSelf: "center" }} />
                     </Button>):(<></>)}

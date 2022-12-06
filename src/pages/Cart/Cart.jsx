@@ -179,6 +179,7 @@ export default function Cart() {
                                     quantity={itemQuantities[index]}
                                     isDeletable={true}
                                     isOrder ={false}
+                                    allproducts ={false}
                                     handledelete={() => {
 
 

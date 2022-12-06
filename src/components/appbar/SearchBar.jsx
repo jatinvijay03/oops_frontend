@@ -89,12 +89,10 @@ function NavScrollExample(props) {
       <MenuItem onClick={()=>{navigate('/orders')}}>Your Orders</MenuItem>
       {(localStorage.getItem('role') == 'manager' || localStorage.getItem('role') == 'admin')?<MenuItem onClick={handleAddProduct}>Add Products</MenuItem>:<></>}
       {(localStorage.getItem('role') == 'manager' || localStorage.getItem('role') == 'admin')?<MenuItem onClick={handleAddCategory}>Add Categories</MenuItem>:<></>}
-
-      {(localStorage.getItem('role') == 'admin')?<MenuItem onClick={handleAllProducts}>All Products</MenuItem>:<></>}
-
+      {(localStorage.getItem('role') == 'manager' || localStorage.getItem('role') == 'admin')?<MenuItem onClick={()=>{navigate('/productsDelete')}}>All Products</MenuItem>:<></>}
       {(localStorage.getItem('role') == 'admin')?<MenuItem onClick={()=>{navigate('/adminOrders')}}>All Orders</MenuItem>:<></>}
       {(localStorage.getItem('role') == 'admin')?<MenuItem onClick={()=>{navigate('/applications')}}>Manager Applications</MenuItem>:<></>}
-      {(localStorage.getItem('role') == 'admin')?<MenuItem onClick={()=>{navigate('/productsDelete')}}>Delete Products</MenuItem>:<></>}
+      
       {(localStorage.getItem('role') == 'admin')?<MenuItem onClick={()=>{navigate('/users')}}>Users</MenuItem>:<></>}
       <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
     </Menu>

@@ -124,6 +124,7 @@ export default function OrderPage() {
                                                     isDeletable={false}
                                                     isOrder ={true}
                                                     date={order[index].orderDate}
+                                                    allproducts ={false}
                                                 />
 
                                             </MDBCardBody>

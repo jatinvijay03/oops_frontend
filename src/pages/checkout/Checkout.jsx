@@ -296,6 +296,7 @@ function Checkout() {
                                 quantity={itemQuantities[index]}
                                 isDeletable={false}
                                 isOrder ={false}
+                                allproducts ={false}
                                 handledelete={() => {
 
 
