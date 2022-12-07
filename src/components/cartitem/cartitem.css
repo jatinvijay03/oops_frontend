@@ -13,5 +13,13 @@
 .delete,.delete:active,.delete:hover,.delete:visited{
     color:#e03444;
     border-width:0px !important;
-    
+}
+
+.check,.check:active,.check:hover,.check:visited{
+    color:#82CD47;
+    border-width:0px !important;
+}
+
+.textstock{
+    color:white !important;
 }
