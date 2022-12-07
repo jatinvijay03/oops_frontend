@@ -15,11 +15,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import "./orderpage.css";
 import CartItem from "../../components/cartitem/CartItem";
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import dayjs from 'dayjs';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { Button } from "react-bootstrap";
 
 
 export default function OrderPage() {
@@ -31,9 +31,11 @@ export default function OrderPage() {
     const [itemQuantities, setitemQuantities] = useState(0);
     
     const [value, setValue] = useState(null);
+    const [tempvalue, settempValue] = useState(null);
 
     const prodEndPoint = "http://localhost:8080/oops/api/product";
     var orderEndPoint = "http://localhost:8080/oops/api/order/";
+   
 
 
     const getCategs = async () => {
@@ -73,13 +75,13 @@ export default function OrderPage() {
     const getOrders = async () => {
         if(value!== null){
             orderEndPoint = orderEndPoint+value.$y+"-" +value.$M+"-" +value.$D;
-            console.log(orderEndPoint);
+            
         }
         const response = await fetch(orderEndPoint);
         const myJson = await response.json();
-        console.log(myJson);
+        
         setOrder(myJson);
-        console.log(order);
+        
         var produ = []
         var quantities = []
 
@@ -99,6 +101,12 @@ export default function OrderPage() {
 
     }
     useEffect(() => { getOrders(); }, [value]);
+
+    const handledate = ()=>{
+        setValue(null);
+        setValue(tempvalue);
+        
+    }
 
 
     return (
@@ -125,25 +133,31 @@ export default function OrderPage() {
                                         <Stack spacing={3} style={{marginTop:"4%",color:"white"}}>
 
                                             <DatePicker
+                                                disableFuture
+                                                disableMaskedInput
                                                 style={{color:"white"}}
                                                 label="Pick date"
-                                                value={value}
+                                                value={tempvalue}
                                                 onChange={(newValue) => {
-                                                    console.log(orderproducts);
+                                                    
                                                     if(newValue!=null){
                                                         newValue.$M+=1;
                                                         if(parseInt(newValue.$D)<10){newValue.$D="0"+newValue.$D}
                                                         if(parseInt(newValue.$M)<10){newValue.$M="0"+newValue.$M}
                                                     }
                                                     
-                                                    setValue(newValue)
-                                                    console.log(newValue)
+                                                    settempValue(newValue)
+                                                    
+                                                   
                                                     
                                                     
                                                     
                                                 }}
-                                                renderInput={(params) => <TextField {...params} helperText={null} />}
+                                                renderInput={(params) => <TextField {...params} helperText={null} />
+                                                }
+                                                
                                             />
+                                            <Button onClick={handledate} variant="outline-success">Select Date</Button>
                                         </Stack>
                                     </LocalizationProvider>
                                 </MDBCardHeader>
@@ -151,11 +165,14 @@ export default function OrderPage() {
 
 
                                     {order.length===0?(<></>):(orderproducts.map((product, index) => {
-                                        return (<MDBCard className="shadow-0 border mb-4">
-                                            <MDBCardBody>
+                                        
+                                        
+                                        return (
+                                            <MDBCard className="shadow-0 border mb-4" key={index}>
+                                            <MDBCardBody key={index}>
                                                 <CartItem
+                                                   
                                                     className="checkoutcartitem"
-                                                    key={index}
                                                     image={product.image}
                                                     description={product.description}
                                                     price={product.price}
