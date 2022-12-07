@@ -14,27 +14,20 @@ import SearchBar from "../../components/appbar/SearchBar";
 import { useNavigate, useParams } from "react-router-dom";
 import "./orderpage.css";
 import CartItem from "../../components/cartitem/CartItem";
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { Button } from "react-bootstrap";
 
 
-
-export default function OrderPage() {
+export default function ReportsPage() {
 
     const [products, setProducts] = useState([]);
     const [searchInput, setSearch] = useState("");
     const [order, setOrder] = useState([]);
     const [orderproducts, setOrderProducts] = useState([]);
     const [itemQuantities, setitemQuantities] = useState(0);
-    const [value, setValue] = useState(null);
 
 
+    const params = useParams();
     const prodEndPoint = "http://localhost:8080/oops/api/product";
-    var orderEndPoint = "http://localhost:8080/oops/api/order/";
+    var orderEndPoint = "http://localhost:8080/oops/api/order/" + params.query;
 
 
 
@@ -53,7 +46,6 @@ export default function OrderPage() {
         }
     }
 
-    const params = useParams();
     const [searchvalue, setSearchValue] = useState(params.query);
 
     const navigate = useNavigate();
@@ -73,6 +65,7 @@ export default function OrderPage() {
     }, [searchvalue]);
 
     const getOrders = async () => {
+
         const response = await fetch(orderEndPoint);
         const myJson = await response.json();
 
@@ -96,8 +89,7 @@ export default function OrderPage() {
         });
 
     }
-    useEffect(() => { getOrders(); }, [value]);
-
+    useEffect(() => { getOrders(); }, []);
 
 
 
@@ -121,45 +113,11 @@ export default function OrderPage() {
                                         Orders Report
 
                                     </MDBTypography>
-
-                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                        <Stack spacing={3} style={{marginTop:"4%",color:"white"}}>
-
-                                            <DatePicker
-                                                disableFuture
-                                                disableMaskedInput
-                                                style={{color:"white"}}
-                                                label="Pick date"
-                                                value={value}
-                                                onChange={(newValue) => {
-                                                    
-                                                    if(newValue!=null){
-                                                        newValue.$M+=1;
-                                                        if(parseInt(newValue.$D)<10){newValue.$D="0"+newValue.$D}
-                                                        if(parseInt(newValue.$M)<10){newValue.$M="0"+newValue.$M}
-                                                    }
-                                                    
-                                                    setValue(newValue);
-
-                                                    navigate('/report/'+newValue.$y+"-"+newValue.$M+"-"+newValue.$D)
-                                                    
-                                                   
-                                                    
-                                                    
-                                                    
-                                                }}
-                                                renderInput={(params) => <TextField {...params} helperText={null} />
-                                                }
-                                                
-                                            />
-                                           
-                                        </Stack>
-                                    </LocalizationProvider>
                                 </MDBCardHeader>
                                 <MDBCardBody className="p-4">
 
 
-                                    {order.length===0?(<></>):(orderproducts.map((product, index) => {
+                                    {(orderproducts.map((product, index) => {
 
 
                                         return (

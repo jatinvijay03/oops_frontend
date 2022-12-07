@@ -4,7 +4,7 @@ import Signup from './pages/signup/Signup';
 import AddProduct from './pages/addproduct/AddProduct';
 import AddCategory from './pages/addcategory/AddCategory';
 import HomePage from './pages/homepage/HomePage';
-import {Routes,Route} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import ProductPage from './pages/Productpage/ProductPage';
 import Cart from './pages/Cart/Cart';
 import Checkout from './pages/checkout/Checkout';
@@ -18,6 +18,7 @@ import AdminOrder from './pages/orderpage/AdminOrder';
 import ManagerAps from './pages/manageraps/ManagerAps';
 import Users from './pages/users/Users';
 import CreateUser from './pages/signup/CreateUser'
+import ReportsPage from './pages/orderpage/Reports';
 
 
 
@@ -26,26 +27,25 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path='/' element={<HomePage/>}/>
-        <Route path='login' element={<Login/>}/>
-        <Route path='signup' element={<Signup/>}/>
-        <Route path='products/:query' element={<ProductPage/>}/>
-        <Route path='cart' element={<Cart/>}/>
-        <Route path='checkout' element={<Checkout/>}/>
-        <Route path='wallet' element={<Wallet/>}/>
-        <Route path='addproduct' element={<AddProduct/>}/>
-        <Route path='addcategory' element={<AddCategory/>}/>
-        <Route path='profile' element={<Profile/>}/>
-        <Route path='orders' element={<OrderPage/>}/>
+        <Route path='/' element={<HomePage />} />
+        <Route path='login' element={<Login />} />
+        <Route path='signup' element={<Signup />} />
+        <Route path='products/:query' element={<ProductPage />} />
+        <Route path='cart' element={<Cart />} />
+        <Route path='checkout' element={<Checkout />} />
+        <Route path='wallet' element={<Wallet />} />
+        <Route path='addproduct' element={<AddProduct />} />
+        <Route path='addcategory' element={<AddCategory />} />
+        <Route path='profile' element={<Profile />} />
+        <Route path='orders/' element={<OrderPage />} />
+        <Route path='report/:query' element={<ReportsPage />} />
+        <Route path='productsDelete' element={<DeleteProductPage />} />
+        <Route path='adminOrders' element={<AdminOrder />} />
+        <Route path='applications' element={<ManagerAps />} />
+        <Route path='users' element={<Users />} />
+        <Route path='createuser' element={<CreateUser />} />
 
-        <Route path='productsDelete' element={<DeleteProductPage/>}/>
-
-        <Route path='adminOrders' element={<AdminOrder/>}/>
-        <Route path='applications' element={<ManagerAps/>}/>
-        <Route path='users' element={<Users/>}/>
-        <Route path='createuser' element={<CreateUser/>}/>
-
-      </Routes> 
+      </Routes>
     </div>
   );
 }
