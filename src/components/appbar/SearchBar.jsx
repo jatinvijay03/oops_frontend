@@ -109,10 +109,10 @@ function NavScrollExample(props) {
           <Navbar.Brand className='Brand'>
           <img
               alt=""
-              src='../../images/logo.png'
-              width="30"
-              height="30"
-              className="d-inline-block align-top"
+              src='https://i.ibb.co/5TCH7BF/Screenshot-2022-12-07-at-5-41-46-AM-modified.png'
+              width="40"
+              height="40"
+              className="aglogo d-inline-block align-center"
             />
             {' '}
             AGGARWALS</Navbar.Brand></button>

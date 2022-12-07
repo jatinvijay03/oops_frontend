@@ -15,3 +15,7 @@
     
 }
 
+.error{
+    border-color:red;
+    z-index:10;
+}

@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { Grid } from "@mui/material";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { Alert } from "react-bootstrap";
 
 import ProductCard from "../../components/productcard/ProductCard";
@@ -21,6 +22,7 @@ export default function ProductPage() {
     const [show, setShow] = useState(false);
     const [products, setProducts] = useState([]);
     const [searchInput, setSearch] = useState("");
+    const [isError, setisError] = useState(false);
 
 
 
@@ -72,20 +74,23 @@ export default function ProductPage() {
         await fetch(cartItemEndpoint, { method: 'post', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
     }
 
-    const handleClick = (event) => {
-        const data =
+    const handleClick = (event, stock) => {
+        if(stock < 1){
+            setisError(true);
+            setTimeout(() => setisError(false), 2000)
+        }
+        else{
+            const data =
             [{
                 "uid": localStorage.getItem('uid'),
                 "pid": event,
                 quantity: 1
             }]
-
-
-        postreq(data);
-        setShow(true);
-        setTimeout(() => setShow(false), 2000)
-
-
+            postreq(data);
+            setShow(true);
+            setTimeout(() => setShow(false), 2000)
+        }
+        
     }
 
 
@@ -110,11 +115,15 @@ export default function ProductPage() {
                                     img={product.image}
                                     description={product.description}
                                     price={product.price}
-                                    handleClick={() => handleClick(product.id)}
+                                    stock={product.stock}
+                                    handleClick={() => handleClick(product.id, product.stock)}
                                 /></Grid>
                         })}
 
                     </Grid>)}
+                {isError ? (<Alert className="alert error" variant="danger" onClose={() => setisError(false)}>
+                                    <p><CancelIcon />&nbsp;&nbsp;Not enough in stock</p>
+                                </Alert>) : (<></>)}
                 {show ? (<Alert className = "alert" variant="success" onClose={() => setShow(false)}>
                     <p><CheckCircleIcon/>&nbsp;&nbsp;Item Added to cart</p>
                 </Alert>) : (<></>)}
