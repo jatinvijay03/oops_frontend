@@ -21,6 +21,14 @@ export default function DeleteProductPage() {
     const [products, setProducts] = useState([]);
     const [searchInput, setSearch] = useState("");
     const [prods, setProds] = useState([]);
+
+
+    const [stock, setStock] = useState('');
+
+    const handleStock = (event) => {
+        setStock(event.target.value);
+    }
+
     
 
 
@@ -93,6 +101,8 @@ export default function DeleteProductPage() {
         window.location.reload();
     }
 
+    
+
 
     return (
         <div>
@@ -117,6 +127,7 @@ export default function DeleteProductPage() {
                                 <MDBCardBody className="p-4">
 
                                     {prods.map((product, index) => {
+
                                         return (<MDBCard className="shadow-0 border mb-4">
                                             <MDBCardBody>
                                                 <CartItem
@@ -126,6 +137,8 @@ export default function DeleteProductPage() {
                                                     description={product.description}
                                                     price={product.price}
                                                     name={product.name}
+                                                    stock={product.stock}
+                                                    id = {product.id}
                                                     isDeletable={true}
                                                     isOrder ={false}
                                                     allproducts ={true}
