@@ -13,6 +13,7 @@ export default function CartItem(props) {
                 <Stack sx={{ alignItems: "flex-start", width: 290 }}spacing={2}>
                     <p className="name">{props.name}</p>
                     {props.isOrder?(<h6>Price: ₹{props.price} </h6>):(<h6>₹{props.price} </h6>)}
+                    
                 </Stack>
 
                 
