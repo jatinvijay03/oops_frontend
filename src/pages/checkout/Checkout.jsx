@@ -35,8 +35,10 @@ function Checkout() {
     const [itemQuantities, setitemQuantities] = useState([])
     const [total, setTotal] = useState(0);
     const [isEnough, setIsEnough] = useState(true);
+    const [errorm, seterrorm] = useState("Cannot buy more than in stock!")
     const [cart, setCart] = useState([]);
     const [checkedout, setCheckedOut] = useState(false);
+    const [na, setna] = useState("");
 
     const getCartItems = async () => {
         var cartItemEndpointuid = cartItemEndpoint + localStorage.getItem('uid');
@@ -132,16 +134,56 @@ function Checkout() {
             });
     }
 
+    const handleStockChange = (pid, stock) => {
+        var data1 = JSON.stringify({
+            "id": pid,
+            "stock": stock,
+            "name":na
+          });
+          
+          var config = {
+            method: 'post',
+            url: 'http://localhost:8080/oops/api/product/updatestock',
+            headers: { 
+              'Content-type': 'application/json'
+            },
+            data : data1
+          };
+          
+          axios(config)
+          .then(function (response) {
+            console.log(JSON.stringify(response.data));
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+          
+    }
+
 
     const checkIfEnough = () => {
-        if (wallet.amount >= total) {
-            console.log("yoo");
-            setIsEnough(true);
-        }
-        else {
-            console.log("nooo");
-            console.log(wallet, total);
+        var st = false;
+        products.forEach((prod, index) => {
+            console.log(prod.stock, itemQuantities[index])
+            if(parseInt(prod.stock) < parseInt(itemQuantities[index])){
+                st = true;
+            }
+        })
+        if(st){
+            console.log("alkjsfd");
+            seterrorm('Cannot buy more than in stock!');
+            setna("no");
             setIsEnough(false);
+        }
+        else{
+            console.log("hihi");
+            if (wallet.amount >= total) {
+                setIsEnough(true);
+            }
+            else {
+                seterrorm('Not enough money in wallet');
+                setIsEnough(false);
+            }
         }
     }
 
@@ -165,13 +207,19 @@ function Checkout() {
         var mm = String(today.getMonth() + 1).padStart(2, '0');
         var yyyy = today.getFullYear();
         today = yyyy + '-' + mm + '-' + dd;
-        if (isEnough) {
+        if(isEnough) {
             console.log(products);
             if (wallet.amount > total) {
                 var mBody = "Thanks for shopping with Aggarwal's Online Supermarket, \nYour order details are as follows, \nDelivery Address: "
                 mBody = mBody + address + "\n"
                 var dataAll = "[";
+                var placeOrder = true;
                 products.forEach((item, index) => {
+                    if(item.stock < itemQuantities[index]){
+                        seterrorm('Cannot buy more than in stock!');
+                        setIsEnough(false);
+                        placeOrder = false;
+                    }
                     var data = JSON.stringify(
                         {
                             "uid": localStorage.getItem('uid'),
@@ -199,15 +247,19 @@ function Checkout() {
                     },
                     data: dataAll
                 };
-                axios(config)
+                if(placeOrder){
+                    axios(config)
                     .then(function (response) {
+                        setCheckedOut(true);
+                        setTimeout(() => { navigate('/') }, 3000)
                         console.log(JSON.stringify(response.data));
                         checkIfEnough();
                         if (isEnough) {
                             if (wallet.amount > total) {
-                                products.forEach((item) => {
+                                products.forEach((item, index) => {
                                     console.log(item.id);
                                     handleDelete(item.id);
+                                    handleStockChange(item.id, item.stock - itemQuantities[index]);
                                 });
                                 updateWallet();
                                 var data = JSON.stringify({
@@ -242,9 +294,7 @@ function Checkout() {
                     .catch(function (error) {
                         console.log(error);
                     });
-
-                setCheckedOut(true);
-                setTimeout(() => { navigate('/') }, 3000)
+                }
             }
             else {
                 setIsEnough(false);
@@ -335,7 +385,7 @@ function Checkout() {
                 </Grid>
             </Grid>
             {!isEnough ? (<Alert className="alert error" variant="danger" onClose={() => setIsEnough(true)}>
-                <p><CancelIcon />&nbsp;&nbsp;Not enough money in wallet</p>
+                <p><CancelIcon />&nbsp;&nbsp;{errorm}</p>
             </Alert>) : (<></>)}
         </div>);
 

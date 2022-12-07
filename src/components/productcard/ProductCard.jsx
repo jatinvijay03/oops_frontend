@@ -20,6 +20,8 @@ function ProductCard(props) {
       </Card.Body>
 
       <ListGroup.Item>₹{props.price}</ListGroup.Item>
+      <ListGroup.Item>{props.stock} left in stock</ListGroup.Item>
+    
 
       <Card.Body>
         <Button variant="custom" onClick={props.handleClick}>Add To Cart</Button>{' '}
